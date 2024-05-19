@@ -1,0 +1,150 @@
+{% extends 'home/main.html' %}
+{% load static %}
+{% block title %}
+UniAbujaFlex | Home
+{% endblock title %}
+{% block moreheader %}
+<meta name="description" content="UniAbujaFlex is your go-to e-library platform offering academic resources, including book handouts and past questions, along with a vibrant student community for collaboration and learning. Join us today!">
+<meta name="keywords" content="UniAbujaFlex, UniAbuja, University of Abuja, e-library, academic resources, book handouts, past questions, student community, collaboration, learning">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="UniAbujaFlex - Empowering Students with Academic Resources and Community">
+<meta property="og:description" content="UniAbujaFlex is your go-to e-library platform offering academic resources, including book handouts and past questions, along with a vibrant student community for collaboration and learning. Join us today!">    
+<meta property="og:image" content="/static/home/images/logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="UniAbujaFlex - Empowering Students with Academic Resources and Community">
+<meta name="twitter:description" content="UniAbujaFlex is your go-to e-library platform offering academic resources, including book handouts and past questions, along with a vibrant student community for collaboration and learning. Join us today!">    
+<meta name="twitter:image" content="/static/home/images/logo.png">
+<link rel="canonical" href="https://www.yourwebsite.com/your-page-url">
+{% endblock moreheader %}
+
+{% block container %}
+<div class="container">
+    <aside>
+        <div class="toggle">
+            <div class="logo">
+                <img src="{% static 'home/images/logo.png' %}">
+                <h2>UniAbuja<span class="danger">Flex</span></h2>
+            </div>
+            <div class="close" id="close-btn">
+                <span class="material-icons-sharp">
+                    close
+                </span>
+            </div>
+        </div>
+
+        <div class="sidebar">
+            <a href="#" class="active">
+                <span class="material-icons-sharp">
+                    home
+                </span>
+                <h3>Home</h3>
+            </a>
+            <a href="{% url 'core:about' %}" >
+                <span class="material-icons-sharp">
+                    info
+                </span>
+                <h3>About</h3>
+            </a>
+            <a href="{% url 'core:privacy' %}">
+                <span class="material-icons-sharp">
+                    privacy_tip
+                </span>
+                <h3>Privacy Policy</h3>
+            </a>
+            <a href="#">
+                <span class="material-icons-sharp">
+                    mail_outline
+                </span>
+                <h3>Contact Us</h3>
+            </a>
+            <a href="{% url 'core:terms' %}">
+                <span class="material-icons-sharp">
+                    description
+                </span>
+                <h3>Terms of Service</h3>
+            </a>
+            <a href="#">
+                <span class="material-icons-sharp">
+                    login
+                </span>
+                <h3>Login</h3>
+            </a>
+        </div>
+    </aside>
+
+    <main>
+
+        <div class="new-users">
+            <div class="user-list" style="border: blue solid 1px;">
+                <span style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 32px; font-weight: 400; letter-spacing: 0.5px; line-height: 1.5;  "  data-aos="fade-right" data-aos-delay="200" data-aos-duration="1000">
+                    welcome to
+                </span>              
+            </div>
+            
+        </div>
+        <div class="right-section">   
+            <div class="user-profile" data-aos="fade-right" data-aos-delay="200" data-aos-duration="1000">
+                <div class="logo">
+                    <img src="{% static 'home/images/logo.png' %}">
+                    <h2>UniAbujaFLex</h2>
+                    <p>Learning made 
+                        <span class="text-slider-container">
+                            <span class="text-slider"><span>Easy</span></span>
+                            <span class="text-slider"><span>Easy</span></span>
+                            <span class="text-slider"><span>Accessible</span></span>
+                        </span>
+                    </p>
+                </div>
+            </div> 
+        </div>
+        <div class="new-users"  data-aos="fade-right" data-aos-delay="200" data-aos-duration="1000">
+            <div class="user-list" >
+                <div class="slider">
+                    <div class="slide"  data-aos="fade-right" data-aos-delay="200" data-aos-duration="1000">
+                      <img src="{% static 'home/images/book.png' %}" alt="Image 1" height="auto">
+                      <div class="slide-content">
+                        <h2>E-library</h2>
+                        <p>Empowering Minds, Enriching Futures</p>
+                        <a href="{% url 'library:faculty_list' %}"><button onclick="buttonClick()">Explore Now</button></a>
+                      </div>
+                    </div>
+                    <div class="slide"  data-aos="fade-left" data-aos-delay="200" data-aos-duration="1000">
+                      <img src="{% static 'home/images/map.png' %}" alt="Image 2">
+                      <div class="slide-content">
+                        <h2>School Map</h2>
+                        <p>Navigating Knowledge, Building Futures</p>
+                        <button onclick="buttonClick()" >Find Your Way Around</button>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </main>
+    <div class="right-section">
+        <div class="nav">
+            <button id="menu-btn">
+                <span class="material-icons-sharp">
+                    menu
+                </span>
+            </button>
+            <div class="dark-mode">
+                <span class="material-icons-sharp active">
+                    light_mode
+                </span>
+                <span class="material-icons-sharp">
+                    dark_mode
+                </span>
+            </div>
+        </div>
+    </div>
+</div>  
+{% endblock container %}
+
+
+
+
+
+
+

@@ -1,0 +1,12 @@
+<h2>{{ course.course_code }}</h2>
+{% if ebooks %}
+    <ul>
+        {% for ebook in ebooks %}
+            <li>{{ ebook.title }}</li>
+            <p>{{ ebook.description }}</p>
+            <a href="{{ ebook.file.url }}">Download</a>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No e-books available for this course.</p>
+{% endif %}

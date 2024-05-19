@@ -1,0 +1,2 @@
+
+web: gunicorn uniabuja_app.wsgi --log-file -

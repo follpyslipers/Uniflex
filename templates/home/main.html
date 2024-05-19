@@ -1,0 +1,162 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flickity/2.0.5/flickity.min.css">
+    <link rel="website icon" type="png" href="home/images/logo.png">
+    <link rel="shortcut icon" href="favicon.ico" type="home/images/logo.png">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'home/style.css">
+    <title>{% block title %}{% endblock title %}</title>
+</head>
+
+<body>
+    <div class="preloader"></div>
+
+    {% block container %}{% endblock container %}
+    <footer>
+        <div class="start">
+            <h3>Feedback</h3>
+            <p>Are you open to collaboration? Let’s schedule a conversation. The coffee is on me.</p>
+            <button>Let's do this</button>
+        </div>
+    
+        <div class="cols">
+            <div class="about-col">
+                <h3>UniAbujaFlex.</h3>
+                <p>Learning Made Easy</p>
+            </div>
+    
+            <div class="links-col">
+                <h4>Useful Links</h4>
+                <a href="{% url 'core:home' %}">Home</a>
+                <a href="{% url 'core:about' %}">About</a>
+                <a href="{% url 'core:privacy' %}">Privacy Policy </a>
+                <a href="{% url 'core:terms' %}">Terms Of Service</a>
+                <a href="#">Contact</a>
+            </div>   
+            <div class="news-col">
+                <h4>Newsletter</h4>
+                <p>Enter your email and get notified about news.</p>
+            
+                {% if success %}
+                    <p class="success-message">Subscription successful! Thank you for subscribing.</p>
+                {% else %}
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit" style="top: 20px;"><i class='bx bxl-telegram'></i></button>
+                    </form>
+                {% endif %}
+            
+                <div style="text-align: center;" id="copyright">
+                    <p><span>UniAbujaFlex</span>&copy; <span>2024</span> All Rights Reserved</p>
+                </div>    
+            </div>            
+        </div>   
+    </footer>
+    <script src="{% static 'index.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7871394796063576"
+         crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flickity/2.0.5/flickity.pkgd.min.js"></script>
+    <script>
+        AOS.init();
+    </script>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

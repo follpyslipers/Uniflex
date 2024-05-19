@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Location List</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        /* Popup styles */
+        .popup {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            overflow: auto;
+        }
+        .popup-content {
+            background-color: #fff;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Location List</h1>
+
+    <!-- Live search input -->
+    <input type="text" id="searchInput" placeholder="Search Locations">
+
+    <!-- Container for search results -->
+    <div id="searchResults"></div>
+
+
+    {% block content %}{% endblock content %}
+
+
+
+
+    <script>
+        $(document).ready(function() {
+            // Include CSRF token in AJAX requests
+            $.ajaxSetup({
+                headers: { "X-CSRFToken": "{{ csrf_token }}" }
+            });
+
+            // Live search
+            $('#searchInput').on('input', function() {
+                var query = $(this).val();
+                if (query.length > 0) {
+                    $.ajax({
+                        url: '{% url 'search_locations' %}',
+                        method: 'GET',
+                        data: { 'q': query },
+                        success: function(data) {
+                            $('#searchResults').html(data);
+                        }
+                    });
+                } else {
+                    $('#searchResults').empty();
+                }
+            });
+
+            // Popup functions
+            function showPopup(name, googleLink) {
+                document.getElementById('locationName').innerText = name;
+                document.getElementById('getDirectionsBtn').href = googleLink;
+                document.getElementById('locationPopup').style.display = 'block';
+            }
+
+            function closePopup() {
+                document.getElementById('locationPopup').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

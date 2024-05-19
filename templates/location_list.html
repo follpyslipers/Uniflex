@@ -1,0 +1,312 @@
+{% extends 'lib/main.html' %}
+{% load static %}
+{% load static %}
+{% block title %}
+UniAbujaFlex | p_site Map
+{% endblock title %}
+{% block moreheader %}
+<meta name="description" content="UniAbujaFlex is your go-to e-library platform offering academic resources, including book handouts and past questions, along with a vibrant student community for collaboration and learning. Join us today!">
+<meta name="keywords" content="UniAbujaFlex, UniAbuja, University of Abuja, e-library, academic resources, book handouts, past questions, student community, collaboration, learning">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="UniAbujaFlex - Empowering Students with Academic Resources and Community">
+<meta property="og:description" content="UniAbujaFlex is your go-to e-library platform offering academic resources, including book handouts and past questions, along with a vibrant student community for collaboration and learning. Join us today!">    
+<meta property="og:image" content="/static/home/images/logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="UniAbujaFlex - Empowering Students with Academic Resources and Community">
+<meta name="twitter:description" content="UniAbujaFlex is your go-to e-library platform offering academic resources, including book handouts and past questions, along with a vibrant student community for collaboration and learning. Join us today!">    
+<meta name="twitter:image" content="/static/home/images/logo.png">
+<link rel="canonical" href="https://www.yourwebsite.com/your-page-url">
+{% endblock moreheader %}
+{% block moreheader %}
+<style>
+    #locationSearchForm {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 4vh; /* Adjust as needed to center vertically */
+    }
+
+    #locationSearchInput {
+        width: 290px;
+        height: 45px;
+        border-radius: 50px;
+        background-color: transparent;
+        border: green solid 1px;
+        padding-left: 20px; 
+    }
+
+    #locationSearchInput::placeholder {
+        color: gray; /* Change this to the desired color */
+        font-style: italic; /* Example of additional styling */
+        padding-left: 20px;
+    }
+
+    /* Popup styles */
+    .popup-overlay {
+        display: none; /* Hidden by default */
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        justify-content: center;
+        align-items: center;
+        z-index: 1000; /* High z-index to ensure it appears above other elements */
+    }
+
+    .popup-content {
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        width: 80%;
+        max-width: 500px;
+        position: relative;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: blue;
+    }
+
+    .popup-content h2 {
+        margin-top: 0;
+    }
+
+    .popup-close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+        font-size: 20px;
+        font-weight: bold;
+        color: blueviolet;
+    }
+
+    .popup-close:hover {
+        color: red;
+    }
+
+    .popup-button {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        align-self: center; /* Center the button horizontally */
+        margin-top: auto; /* Push the button to the bottom */
+    }
+
+    .popup-button:hover {
+        background-color: #0056b3;
+    }
+
+    /* Pagination button styles */
+    .pagination-btn {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin: 0 10px; /* Add margin for spacing between buttons */
+    }
+
+    .pagination-btn:hover {
+        background-color: #0056b3;
+    }
+
+    /* Animation for pagination buttons */
+    @keyframes fadeInOut {
+        0% { opacity: 0; }
+        50% { opacity: 0.5; }
+        100% { opacity: 1; }
+    }
+
+    .animated-btn {
+        animation: fadeInOut 1s ease-in-out infinite alternate;
+    }
+
+    /* Centering pagination controls */
+    #paginationControls {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px; /* Add margin to separate from the content above */
+    }
+
+    #pageIndicator {
+        font-size: 16px;
+        margin: 0 10px; /* Add margin for spacing between the indicator and buttons */
+    }
+</style>
+{% endblock moreheader %}
+{% block container %}
+<div class="container">
+    <aside>
+        <div class="toggle">
+            <div class="logo">
+                <img src="{% static 'images/logo.png' %}">
+                <h2>UniAbuja<span class="danger">Flex</span></h2>
+            </div>
+            <div class="close" id="close-btn">
+                <span class="material-icons-sharp">close</span>
+            </div>
+        </div>
+        <div class="sidebar">
+            <a href="{% url 'library:faculty_list' %}" class="active">
+                <span class="material-icons-sharp">book</span>
+                <h3>book</h3>
+            </a>
+            <a href="{% url 'location:location_list' %}">
+                <span class="material-icons-sharp">map</span>
+                <h3>Map</h3>
+            </a>
+            <a href="#">
+                <span class="">login</span>
+                <h3>Login</h3>
+            </a>
+        </div>
+    </aside>
+    <!-- Main content -->
+    <main>
+        <h1>P-site Map</h1>
+        <!-- Search form -->
+        <div class="new-users">
+            <div class="user-list">
+                <div class="analyse">
+                    <form id="locationSearchForm" style=" justify-content: center; display: flex; align-items: center; ">
+                        <input type="text" id="locationSearchInput" placeholder="Search locations...">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Display filtered locations here -->
+        <div class="new-users">
+            <h2>Locations</h2>
+            <div class="user-list" id="locationResults">
+                <div class="analyse" data-aos="fade-right" data-aos-delay="200" data-aos-duration="1000">
+                    <!-- Filtered locations will be displayed here -->
+                </div>
+            </div>
+            <!-- Pagination controls -->
+            <div id="paginationControls">
+                <button id="prevPageBtn" class="pagination-btn animated-btn" style="display: none;">Previous</button>
+                <span id="pageIndicator"></span>
+                <button id="nextPageBtn" class="pagination-btn animated-btn" style="display: none;">Next</button>
+            </div>
+        </div>
+    </main>
+
+
+    <!-- Popup for location details -->
+    <div class="popup-overlay" id="locationPopup">
+        <div class="popup-content">
+            <span class="popup-close" id="popupClose">&times;</span>
+            <h2 id="popupLocationName"></h2>
+            <a id="popupLocationLink" class="popup-button" href="#" target="_blank">Find Location</a>
+        </div>
+    </div>
+
+    <div class="right-section">
+        <div class="nav">
+            <button id="menu-btn">
+                <span class="material-icons-sharp">menu</span>
+            </button>
+            <div class="dark-mode">
+                <span class="material-icons-sharp active">light_mode</span>
+                <span class="material-icons-sharp">dark_mode</span>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Existing right section -->
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Function to fetch and display locations
+        function fetchLocations(query = '', page = 1) {
+            $.ajax({
+                type: 'GET',
+                url: '{% url "location:location_list" %}',
+                data: { 'q': query, 'page': page },
+                success: function(data) {
+                    displayFilteredLocations(data.locations);
+                    updatePaginationControls(data);
+                }
+            });
+        }
+
+        // Fetch and display all locations initially
+        fetchLocations();
+
+        // Event handler for search input
+        $('#locationSearchInput').on('input', function() {
+            var query = $(this).val().trim();
+            fetchLocations(query);
+        });
+
+        // Event handlers for pagination buttons
+        $('#prevPageBtn').on('click', function() {
+            var currentPage = parseInt($('#pageIndicator').text());
+            fetchLocations($('#locationSearchInput').val().trim(), currentPage - 1);
+        });
+
+        $('#nextPageBtn').on('click', function() {
+            var currentPage = parseInt($('#pageIndicator').text());
+            fetchLocations($('#locationSearchInput').val().trim(), currentPage + 1);
+        });
+
+        function displayFilteredLocations(locations) {
+            $('#locationResults .analyse').empty();  // Clear previous results
+            if (locations.length === 0) {
+                $('#locationResults .analyse').append(
+                    `<div class="no-results">No locations found matching your search.</div>`
+                );
+            } else {
+                locations.forEach(location => {
+                    $('#locationResults .analyse').append(
+                        `<div class="sales location-item" data-name="${location.name}" data-link="${location.google_link}" style="border: brown solid 1px;">
+                            <span class="material-icons-sharp" style="color: red;">location_on</span>
+                            <span>${location.name}</span>
+                        </div>`
+                    );
+                });
+
+                // Add click event to location items
+                $('.location-item').on('click', function() {
+                    var locationName = $(this).data('name');
+                    var locationLink = $(this).data('link');
+                    $('#popupLocationName').text(locationName);
+                    $('#popupLocationLink').attr('href', locationLink);
+                    $('#locationPopup').fadeIn();
+                });
+            }
+        }
+
+        function updatePaginationControls(data) {
+            $('#pageIndicator').text(data.current_page);
+            $('#prevPageBtn').toggle(data.has_previous).toggleClass('animated-btn', !data.has_previous);
+            $('#nextPageBtn').toggle(data.has_next).toggleClass('animated-btn', !data.has_next);
+        }
+
+        // Close popup
+        $('#popupClose').on('click', function() {
+            $('#locationPopup').fadeOut();
+        });
+
+        // Close popup when clicking outside of it
+        $('#locationPopup').on('click', function(e) {
+            if ($(e.target).is('.popup-overlay')) {
+                $('#locationPopup').fadeOut();
+            }
+        });
+    });
+</script>
+
+{% endblock container %}

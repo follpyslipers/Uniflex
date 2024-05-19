@@ -1,0 +1,168 @@
+{% extends 'home/main.html' %}
+{% load static %}
+{% block title %}
+UniAbujaFlex | About
+{% endblock title %}
+{% block moreheader %}
+<meta name="description" content="UniAbujaFlex is your go-to e-library platform offering academic resources, including book handouts and past questions, along with a vibrant student community for collaboration and learning. Join us today!">
+<meta name="keywords" content="UniAbujaFlex, UniAbuja, University of Abuja, e-library, academic resources, book handouts, past questions, student community, collaboration, learning">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="UniAbujaFlex - Empowering Students with Academic Resources and Community">
+<meta property="og:description" content="UniAbujaFlex is your go-to e-library platform offering academic resources, including book handouts and past questions, along with a vibrant student community for collaboration and learning. Join us today!">    
+<meta property="og:image" content="/static/home/images/logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="UniAbujaFlex - Empowering Students with Academic Resources and Community">
+<meta name="twitter:description" content="UniAbujaFlex is your go-to e-library platform offering academic resources, including book handouts and past questions, along with a vibrant student community for collaboration and learning. Join us today!">    
+<meta name="twitter:image" content="/static/home/images/logo.png">
+<link rel="canonical" href="https://www.yourwebsite.com/your-page-url">
+{% endblock moreheader %}
+
+{% block container  %}
+<div class="container">
+    <!-- Sidebar Section -->
+    <aside>
+        <div class="toggle">
+            <div class="logo">
+                <img src="{% static 'home/images/logo.png' %}">
+                <h2>UniAbuja<span class="danger">Flex</span></h2>
+            </div>
+            <div class="close" id="close-btn">
+                <span class="material-icons-sharp">
+                    close
+                </span>
+            </div>
+        </div>
+
+        <div class="sidebar">
+            <a href="{% url 'core:home' %}">
+                <span class="material-icons-sharp">
+                    home
+                </span>
+                <h3>Home</h3>
+            </a>
+            <a href="{% url 'core:about' %}"  class="active">
+                <span class="material-icons-sharp">
+                    info
+                </span>
+                <h3>About</h3>
+            </a>
+            <a href="{% url 'core:privacy' %}">
+                <span class="material-icons-sharp">
+                    privacy_tip
+                </span>
+                <h3>Privacy Policy</h3>
+            </a>
+            <a href="#">
+                <span class="material-icons-sharp">
+                    mail_outline
+                </span>
+                <h3>Contact Us</h3>
+            </a>
+            <a href="#">
+                <span class="material-icons-sharp">
+                    privacy_tip
+                </span>
+                <h3>Privacy Policy</h3>
+
+            </a>
+            <a href="{% url 'core:terms' %}">
+                <span class="material-icons-sharp">
+                    description
+                </span>
+                <h3>Terms of Service</h3>
+            </a>
+            <a href="#">
+                <span class="material-icons-sharp">
+                    login
+                </span>
+                <h3>Login</h3>
+            </a>
+        </div>
+    </aside>
+
+    <main>
+
+        <div class="new-users">
+            <h2>About Us</h2>
+            <div class="user-list" style="border: blue solid 1px;">
+                <div class="about" data-aos="fade-left" data-aos-delay="200" data-aos-duration="1000">
+                    <h2 style="color: red;">About UniAbujaFlex</h2>
+                    <p>At UniAbujaFlex, we understand the challenges students face in accessing relevant academic materials and engaging with their peers for collaborative learning. Our platform is designed to bridge these gaps by providing a comprehensive e-library, including book handouts and past questions, along with a vibrant community for students to connect, share ideas, and support each other.
+                    </p>
+                    <br>
+                    <div class="about" data-aos="fade-right" data-aos-delay="200" data-aos-duration="1000">
+                        <h2 style="color: rgb(60, 255, 6);">Our Mission</h2>
+                        <p>Our mission is to empower students with the tools and resources they need to excel academically. We strive to create a dynamic online environment where learning is not just about accessing information but also about fostering meaningful interactions and collaborations among students.
+                        </p>
+                    </div>
+                    <br>
+                    <div class="about" data-aos="fade-left" data-aos-delay="200" data-aos-duration="1000">
+                        <h2 style="color: rgb(147, 6, 255);">What We Offer:
+                        </h2>
+                        <p>1. E-Library: Access a wide range of book handouts and past questions across various disciplines to enhance your learning experience.
+                            <p>2. Community Forum: Engage in discussions, ask questions, and share insights with fellow students in our interactive community forum.</p>
+                            <p>3. Study Groups: Join or create study groups to collaborate on assignments, projects, and exam preparation.</p>
+                            <p>4. Resource Hub: Explore additional resources such as academic tips, study guides, and recommended reading materials curated by experts.</p>
+                            
+                        </p>
+    
+                    </div>
+                    <br>
+                    <div class="about" data-aos="fade-right" data-aos-delay="200" data-aos-duration="1000">
+                        <h2 style="color: rgb(255, 6, 131);">Why Choose UniAbujaFlex</h2>
+                        <p>* Comprehensive Academic Resources: Find everything you need for your studies in one convenient platform.
+                            <p>* Collaborative Learning: Connect with a diverse community of students to exchange ideas and learn from each other.</p>
+                            <p>* User-Friendly Interface: Navigate our website effortlessly and access resources with ease.</p>
+                            <p>* Supportive Environment: Receive support and guidance from peers and mentors to succeed in your academic journey.</p>
+                            
+                        </p>
+    
+                    </div>
+    
+                    <br>
+                    <div class="about" data-aos="fade-left" data-aos-delay="200" data-aos-duration="1000">
+                        <h2 style="color: rgb(8, 172, 242);">Join UniAbujaFlex today and experience a new way of learning and connecting with your academic community!</h2>
+                        <p>
+                        </p>
+    
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+    <!-- End of Main Content -->
+
+    <!-- Right Section -->
+    <div class="right-section">
+        <div class="nav">
+            <button id="menu-btn">
+                <span class="material-icons-sharp">
+                    menu
+                </span>
+            </button>
+            <div class="dark-mode">
+                <span class="material-icons-sharp active">
+                    light_mode
+                </span>
+                <span class="material-icons-sharp">
+                    dark_mode
+                </span>
+            </div>
+        </div>
+        <!-- End of Nav -->
+
+        <div class="user-profile" data-aos="fade-left" data-aos-delay="200" data-aos-duration="1000">
+            <div class="logo">
+                <img src="{% static 'home/images/logo.png' %}">
+                <h2>UniAbujaFLex</h2>
+                <p>Learn Made Easy</p>
+            </div>
+        </div>
+
+
+
+    </div>
+    
+</div>
+{% endblock container  %}
