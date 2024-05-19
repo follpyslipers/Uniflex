@@ -1,2 +1,2 @@
 
-web: gunicorn ebook_app.wsgi --log-file -
+web: gunicorn ebook.wsgi --log-file -
