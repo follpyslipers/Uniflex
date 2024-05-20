@@ -1,22 +1,5 @@
 {% extends 'home/main.html' %}
 {% load static %}
-{% block title %}
-UniAbujaFlex | Home
-{% endblock title %}
-{% block moreheader %}
-<meta name="description" content="UniAbujaFlex is your go-to e-library platform offering academic resources, including book handouts and past questions, along with a vibrant student community for collaboration and learning. Join us today!">
-<meta name="keywords" content="UniAbujaFlex, UniAbuja, University of Abuja, e-library, academic resources, book handouts, past questions, student community, collaboration, learning">
-<meta name="robots" content="index, follow">
-<meta property="og:title" content="UniAbujaFlex - Empowering Students with Academic Resources and Community">
-<meta property="og:description" content="UniAbujaFlex is your go-to e-library platform offering academic resources, including book handouts and past questions, along with a vibrant student community for collaboration and learning. Join us today!">    
-<meta property="og:image" content="/static/home/images/logo.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="UniAbujaFlex - Empowering Students with Academic Resources and Community">
-<meta name="twitter:description" content="UniAbujaFlex is your go-to e-library platform offering academic resources, including book handouts and past questions, along with a vibrant student community for collaboration and learning. Join us today!">    
-<meta name="twitter:image" content="/static/home/images/logo.png">
-<link rel="canonical" href="https://www.yourwebsite.com/your-page-url">
-{% endblock moreheader %}
-
 {% block container %}
 <div class="container">
     <aside>
@@ -113,7 +96,7 @@ UniAbujaFlex | Home
                       <div class="slide-content">
                         <h2>School Map</h2>
                         <p>Navigating Knowledge, Building Futures</p>
-                        <button onclick="buttonClick()" >Find Your Way Around</button>
+                        <a href="{% url 'location:location_list' %}"><button onclick="buttonClick()">Find Your Way Around</button></a>
                       </div>
                     </div>
                 </div>
