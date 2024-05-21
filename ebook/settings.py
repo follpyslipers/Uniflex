@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-lbdqe-r26a87u!is#s#%aa-+e+tt4$kwdqs@!&om0^4-fyjd)j
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['uniflex.onrender.com']
+ALLOWED_HOSTS = ['uniflex.onrender.com','uniabujaflex.com.ng']
 
 
 
