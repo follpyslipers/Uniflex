@@ -35,3 +35,4 @@ botocore==1.23.54
 django-storages==1.12.3
 python-decouple==3.8
 psycopg2-binary==2.9.9
+django-environ==0.11.2
