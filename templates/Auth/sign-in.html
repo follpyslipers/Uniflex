@@ -1,0 +1,74 @@
+{% extends 'Auth/main.html' %}
+{% load static %}
+
+{% block title %}
+Uniabuja - login
+{% endblock title %}
+
+{% block login %}
+<div class="signup-section">
+    <header>Login</header>
+
+    <div class="social-buttons">
+        <button><i class='bx bx-user'></i> ADMIN</button>
+    </div>
+
+    <div class="separator">
+        <div class="line"></div>
+        <p>Or</p>
+        <div class="line"></div>
+    </div>
+
+    {% if messages %}
+    <div class="alert alert-danger">
+        <b>
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        </b>
+    </div>
+    {% endif %}
+
+    <form method="post" action="{% url 'user:sign-in' %}">
+        {% csrf_token %}
+        <input type="text" name="matric_number" class="form-control" placeholder="Matric Number" required>
+        <input type="password" name="password" class="form-control" placeholder="Password" required>
+        <a href="#">Forget Password?</a>
+        <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+</div>
+{% endblock login %}
+
+
+
+{% block signup %}
+<div class="login-section">
+    <header>Signup</header>
+
+    <div class="social-buttons">
+        <button><i class='bx bx-user'></i> ADMIN</button>
+    </div>
+
+    <div class="separator">
+        <div class="line"></div>
+        <p>Or</p>
+        <div class="line"></div>
+    </div>
+
+                <!-- Display form errors -->
+
+
+<form method="post" action="{% url 'user:sign-up' %}">
+    {% csrf_token %}
+    <input type="text" name="matric_number"  placeholder="Matric Number" required>
+    <input type="email" name="email"  placeholder="Email address" required>
+    <input type="password" name="password1"  placeholder="Password" required>
+    <input type="password" name="password2"  placeholder="Confirm Password" required>
+    <button type="submit" class="btn btn-primary">Signup</button>
+</form>
+
+
+    
+
+</div>
+{% endblock signup %}

@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="{% static 'auth/style.css' %}">
+    <title>{% block title %}{% endblock title %}</title>
+</head>
+
+<body>
+    <div class="preloader"></div>
+
+    <div class="container">
+
+
+        {% if messages %}
+        <div class="alert alert-danger">
+            <b>
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+            </b>
+        </div>
+        {% endif %}
+
+        {% block signup %}
+        
+        {% endblock signup %}
+
+        {% block login %}
+        
+        {% endblock login %}
+
+
+
+
+    </div>
+
+
+    <script src="{% static 'script.js' %}"></script>
+    <script>
+        const preloader = document.querySelector('.preloader');
+        let colorIndex = 0;
+        const colors = ['#007bff', '#28a745', '#dc3545', '#ffc107']; // Add more colors as needed
+    
+        setInterval(() => {
+            preloader.style.borderTopColor = colors[colorIndex];
+            colorIndex = (colorIndex + 1) % colors.length;
+        }, 1000);
+    
+        window.addEventListener('load', () => {
+            preloader.classList.add('hidden'); // Hide the preloader when the page loads
+            document.querySelector('.container').classList.add('visible'); // Show the container
+        });
+    </script>
+</body>
+
+</html>

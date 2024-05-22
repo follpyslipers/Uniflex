@@ -29,7 +29,9 @@ SECRET_KEY = 'django-insecure-lbdqe-r26a87u!is#s#%aa-+e+tt4$kwdqs@!&om0^4-fyjd)j
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['uniflex.onrender.com','www.uniabujaflex.com.ng']
+# ALLOWED_HOSTS = ['uniflex.onrender.com','www.uniabujaflex.com.ng','localhost','172.0.0.1']
+
+ALLOWED_HOSTS = []
 
 
 
@@ -59,6 +61,8 @@ INSTALLED_APPS = [
     'library',
     'core',
     'location',
+    'user',   
+    
 ]
 
 MIDDLEWARE = [
@@ -132,18 +136,21 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# CSRF_TRUSTED_ORIGINS = [
+#     "www.uniabujaflex.com.ng",
+# ]
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Africa/Lagos'
+
 
 USE_I18N = True
 
 USE_TZ = True
-
 
 
 AWS_ACCESS_KEY_ID = "AKIA5DILOY5YYEAUKIN3"
@@ -175,6 +182,16 @@ STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{STATIC_LOCATION}/'
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+
+
+
+
+LOGIN_URL = "user:sign-in"
+
+LOGOUT_REDIRECT_URL = "user:sign-in"
+
+AUTH_USER_MODEL = 'user.User'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

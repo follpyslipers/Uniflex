@@ -15,7 +15,6 @@ UniAbujaFlex | library departments
 <meta name="twitter:title" content="UniAbujaFlex - Empowering Students with Academic Resources and Community">
 <meta name="twitter:description" content="UniAbujaFlex is your go-to e-library platform offering academic resources, including book handouts and past questions, along with a vibrant student community for collaboration and learning. Join us today!">    
 <meta name="twitter:image" content="/static/home/images/logo.png">
-<link rel="canonical" href="https://www.yourwebsite.com/your-page-url">
 {% endblock moreheader %}
 
 {% block container %}
@@ -40,10 +39,22 @@ UniAbujaFlex | library departments
                 <span class="material-icons-sharp">map</span>
                 <h3>Map</h3>
             </a>
-            <a href="#">
-                <span class="material-icons-sharp">login</span>
-                <h3>Login</h3>
-            </a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'user:sign-out' %}">
+                    <span class="material-icons-sharp">
+                        logout
+                    </span>
+                    <h3>Logout</h3>
+                </a>
+            <!-- Display login link if user is not authenticated -->
+            {% else %}
+                <a href="{% url 'user:sign-in' %}">
+                    <span class="material-icons-sharp">
+                        login
+                    </span>
+                    <h3>Login</h3>
+                </a>
+            {% endif %}
         </div>
     </aside>
 

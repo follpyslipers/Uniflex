@@ -65,12 +65,22 @@ UniAbujaFlex | Term Of Service
                 </span>
                 <h3>Terms of Service</h3>
             </a>
-            <a href="#">
-                <span class="material-icons-sharp">
-                    login
-                </span>
-                <h3>Login</h3>
-            </a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'user:sign-out' %}">
+                    <span class="material-icons-sharp">
+                        logout
+                    </span>
+                    <h3>Logout</h3>
+                </a>
+            <!-- Display login link if user is not authenticated -->
+            {% else %}
+                <a href="{% url 'user:sign-in' %}">
+                    <span class="material-icons-sharp">
+                        login
+                    </span>
+                    <h3>Login</h3>
+                </a>
+            {% endif %}
         </div>
     </aside>
 
