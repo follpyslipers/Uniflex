@@ -3,8 +3,8 @@ self.addEventListener('install', event => {
         caches.open('v1').then(cache => {
             return cache.addAll([
                 '/',
-                '/static/icons/icon-192x192.png',
-                '/static/icons/icon-512x512.png',
+                '/static/home/images/logo.png',
+                '/static/home/images/logo.png',
                 // Add other assets you want to cache
             ]);
         })
