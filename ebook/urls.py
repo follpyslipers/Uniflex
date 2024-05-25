@@ -22,9 +22,11 @@ from django.contrib import sitemaps
 from django.contrib.sitemaps.views import sitemap
 from library.sitemaps import FacultySitemap, DepartmentSitemap, CourseSitemap, EBookSitemap
 from location.sitemaps import LocationSitemap
+from django.conf.urls import handler404
+from django.shortcuts import render
 
 
-handler404 = custom_page_not_found
+
 
 
 urlpatterns = [
@@ -50,8 +52,6 @@ sitemaps = {
 
 ################################################################
 
-from django.conf.urls import handler404
-from django.shortcuts import render
 
 def custom_page_not_found(request, exception):
     return render(request, '404.html', status=404)
