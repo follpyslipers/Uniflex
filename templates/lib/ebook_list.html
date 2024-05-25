@@ -137,7 +137,7 @@
                     {% for ebook in ebooks %}
                         {% comment %} <a href="{% url 'E_libary:download_ebook' ebook.id %}"> {% endcomment %}
                             <div class="user">
-                                <img src="{{ ebook.cover_image.url }}" alt="Cover Image">
+                                <img src="{% static 'images/pdf.png' %}" alt="Cover Image">
                                 <h2>{{ ebook.title }}</h2>
                                 <p><b>{{ ebook.description }}</b></p>
                             </div>

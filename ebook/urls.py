@@ -24,7 +24,7 @@ from library.sitemaps import FacultySitemap, DepartmentSitemap, CourseSitemap, E
 from location.sitemaps import LocationSitemap
 from django.conf.urls import handler404
 from django.shortcuts import render
-
+from django.views.generic import TemplateView
 
 
 
@@ -37,6 +37,7 @@ urlpatterns = [
     path('', include('core.urls') ),
     path('location/', include('location.urls') ),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
+    path('ads.txt', TemplateView.as_view(template_name="ads.txt", content_type='text/plain')),
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
