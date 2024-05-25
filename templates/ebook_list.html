@@ -1,12 +1,44 @@
-<h2>{{ course.course_code }}</h2>
-{% if ebooks %}
-    <ul>
-        {% for ebook in ebooks %}
-            <li>{{ ebook.title }}</li>
-            <p>{{ ebook.description }}</p>
-            <a href="{{ ebook.file.url }}">Download</a>
-        {% endfor %}
-    </ul>
-{% else %}
-    <p>No e-books available for this course.</p>
-{% endif %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ course.title }} E-Books</title>
+    <style>
+        .ebook-link {
+            display: flex;
+            align-items: center;
+        }
+        .pdf-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+    <h1>E-Books for {{ course.course_code }}: {{ course.title }}</h1>
+
+    {% if ebooks %}
+        <ul>
+            {% for ebook in ebooks %}
+                <li>
+                    <div class="ebook-link">
+                        <img src="{% static 'pdf-icon.png' %}" alt="PDF Icon" class="pdf-icon">
+                        <div>
+                            <h2>{{ ebook.title }}</h2>
+                            <p>{{ ebook.description }}</p>
+                            <p>Status: {{ ebook.get_status_display }}</p>
+                            <p>Uploaded at: {{ ebook.uploaded_at }}</p>
+                            <a href="{{ ebook.file.url }}">Download</a>
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No e-books found for this course.</p>
+    {% endif %}
+
+    {% comment %} <a href="{% url 'course_list' course.department.id %}">Back to Courses</a> {% endcomment %}
+</body>
+</html>

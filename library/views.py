@@ -38,15 +38,19 @@ def department_list(request, faculty_id):
     departments = Department.objects.filter(faculty=faculty)
     return render(request, 'lib/department_list.html', {'faculty': faculty, 'departments': departments})
 
+
+
 def course_list(request, department_id):
     department = get_object_or_404(Department, pk=department_id)
     courses = Course.objects.filter(department=department)
-    return render(request, 'course_list.html', {'department': department, 'courses': courses})
+    return render(request, 'lib/course_list.html', {'department': department, 'courses': courses})
+
+
 
 def ebook_list(request, course_id):
     course = get_object_or_404(Course, pk=course_id)
     ebooks = E_Book.objects.filter(course=course)
-    return render(request, 'ebook_list.html', {'course': course, 'ebooks': ebooks})
+    return render(request, 'lib/ebook_list.html', {'course': course, 'ebooks': ebooks})
 
 
 from django.shortcuts import render, redirect

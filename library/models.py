@@ -1,6 +1,9 @@
 from django.db import models
 from django.core.validators import FileExtensionValidator
 
+
+def default_cover_image():
+    return 'images/pdf.png'
 # Constants for choices
 APPROVED = 'Approved'
 AWAITING_APPROVAL = 'Awaiting Approval'
@@ -76,6 +79,7 @@ class E_Book(models.Model):
         upload_to=user_directory_path,
         validators=[FileExtensionValidator(allowed_extensions=['pdf', 'epub', 'mobi', 'txt', 'ppt', 'pptx', 'doc', 'docx'])],
     )
+    cover_image = models.ImageField(upload_to='ebooks/covers/', default=default_cover_image)
     uploaded_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default=AWAITING_APPROVAL, blank=True, null=True)
 

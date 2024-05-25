@@ -1,0 +1,250 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+    <link rel="stylesheet" href="{% static 'home/style.css' %}">
+    <meta name="google-adsense-account" content="ca-pub-7871394796063576">
+    <title>Uniabuja Flex - E_library</title>
+</head>
+
+<body>
+    <div class="preloader"></div>
+
+    <div class="container">
+        <!-- Sidebar Section -->
+        <aside>
+            <div class="toggle">
+                <div class="logo">
+                    <img src="{% static 'home/images/logo.png' %}">
+                    <h2>uni<span class="danger">Abuja</span></h2>
+                </div>
+                <div class="close" id="close-btn">
+                    <span class="material-icons-sharp">
+                        close
+                    </span>
+                </div>
+            </div>
+{% comment %} 
+            <div class="sidebar">
+                <a href="{% url 'E_libary:error_page' %}" >
+                    <span class="material-icons-sharp">
+                        dashboard
+                    </span>
+                    <h3>Gobal Lobby</h3>
+                </a>
+                <a href="{% url 'E_libary:error_page' %}" >
+                    <span class="material-icons-sharp">
+                        dashboard
+                    </span>
+                    <h3>Faculty Lobby</h3>
+                </a>
+                <a href="{% url 'E_libary:error_page' %}" >
+                    <span class="material-icons-sharp">
+                        dashboard
+                    </span>
+                    <h3>Departmental Lobby</h3>
+                </a>
+                <a href="{% url 'E_libary:error_page' %}">
+                    <span class="material-icons-sharp">
+                        person_outline
+                    </span>
+                    <h3>Profile</h3>
+                </a>
+                <a href="{% url 'E_libary:error_page' %}" class="active">
+                    <span class="material-icons-sharp">
+                        receipt_long
+                    </span>
+                    <h3>E-libary</h3>
+                </a>
+                <a href="{% url 'E_libary:error_page' %}">
+                    <span class="material-icons-sharp">
+                        settings
+                    </span>
+                    <h3>Settings</h3>
+                </a>
+                <!-- Display logout link if user is authenticated -->
+                {% if user.is_authenticated %}
+                    <a href="{% url 'user:sign-out' %}">
+                        <span class="material-icons-sharp">
+                            logout
+                        </span>
+                        <h3>Logout</h3>
+                    </a>
+                <!-- Display login link if user is not authenticated -->
+                {% else %}
+                    <a href="{% url 'user:sign-in' %}">
+                        <span class="material-icons-sharp">
+                            login
+                        </span>
+                        <h3>Login</h3>
+                    </a>
+                {% endif %}
+            </div> {% endcomment %}
+        </aside>
+        <!-- End of Sidebar Section -->
+
+        <!-- Main Content -->
+        <main>
+
+            {% if matric_number %}
+                <p style="color: gold;">Hey {{ matric_number }}, welcome back!</p>
+            {% endif %}
+            <h1>E-library</h1>
+            <!-- Analyses -->
+            <div class="analyse">
+                <div class="sales" style="border: 1px solid red;
+                ">
+
+                    <div class="status">
+                        <div class="search-container" data-aos="fade-right" data-aos-delay="200" data-aos-duration="1000">
+                            <form method="GET">
+                                <input type="text" class="search-input" name="q" placeholder="Search books">
+                                <button type="submit" class="search-btn">Search</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="visits" style="border-color: gold; border: 1px dashed red;
+                ">
+                    {% comment %} <a href="{% url 'E_libary:upload_ebook' %}">
+                        <div class="status">
+                            <div class="info" style="padding-left: 23%;">
+                                <img src="{% static 'images/uploadimage.png' %}" alt="" style="height: 8rem; width: 100%;">
+                                <b><p style="top: 50%; color: red;">click Here To Uplaod E-book</p></b>
+                            </div>
+                        </div>
+                    </a> {% endcomment %}
+                </div>
+            </div>
+
+
+
+            <!-- End of Analyse Section -->
+        
+            <!-- New Users Section -->
+            <div class="new-users">
+                <h2>E-Book</h2>
+            
+                {% if ebooks %}
+                <div class="user-list" data-aos="fade-right" data-aos-delay="200" data-aos-duration="1000">
+                    {% for ebook in ebooks %}
+                        {% comment %} <a href="{% url 'E_libary:download_ebook' ebook.id %}"> {% endcomment %}
+                            <div class="user">
+                                <img src="{{ ebook.cover_image.url }}" alt="Cover Image">
+                                <h2>{{ ebook.title }}</h2>
+                                <p><b>{{ ebook.description }}</b></p>
+                            </div>
+                            <button type="button" style="border-radius: 50px; height:30px; margin-left:40%;width:70px;">
+                                <i class="fa-regular fa-download fa-bounce fa-2xl" style="color: #003694;"></i>
+                            </button>
+                        </a>
+                    {% endfor %}
+                </div>
+            
+                <!-- Pagination -->
+                <div class="pagination">
+                    {% if ebooks.has_previous %}
+                        <a href="?page=1{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">&laquo; First</a>
+                        <a href="?page={{ ebooks.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">&lsaquo; Previous</a>
+                    {% endif %}
+            
+                    {% for num in ebooks.paginator.page_range %}
+                        {% if ebooks.number == num %}
+                            <span data-aos="fade-right" data-aos-delay="200" data-aos-duration="1000"><b>Page {{ num }}</b></span>
+                        {% else %}
+                            <a href="?page={{ num }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{ num }}</a>
+                        {% endif %}
+                    {% endfor %}
+            
+                    {% if ebooks.has_next %}
+                        <a href="?page={{ ebooks.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">Next &rsaquo;</a>
+                        <a href="?page={{ ebooks.paginator.num_pages }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">Last &raquo;</a>
+                    {% endif %}
+                </div>
+                <!-- End of Pagination -->
+            {% else %}
+                <p data-aos="fade-left" data-aos-delay="200" data-aos-duration="1000">No eBooks found.</p>
+            {% endif %}
+            
+            </div>
+            <!-- End of New Users Section -->
+
+            <!-- Recent Orders Table -->
+
+            <!-- End of Recent Orders -->
+
+        </main>
+        <!-- End of Main Content -->
+
+        <!-- Right Section -->
+        <div class="right-section">
+            <div class="nav" data-aos="fade-right" data-aos-delay="200" data-aos-duration="1000">
+                <button id="menu-btn">
+                    <span class="material-icons-sharp">
+                        menu
+                    </span>
+                </button>
+                <div class="dark-mode">
+                    <span class="material-icons-sharp active">
+                        light_mode
+                    </span>
+                    <span class="material-icons-sharp">
+                        dark_mode
+                    </span>
+                </div>
+
+
+            </div>
+            <!-- End of Nav -->
+
+            <div class="user-profile">
+                <div class="logo" data-aos="fade-left" data-aos-delay="200" data-aos-duration="1000">
+                    <img src="{% static 'images/logo.png' %}">
+                    <h2>UniAbuja Flex</h2>
+                    <p>Hard Work pay</p>
+                </div>
+            </div>
+
+
+
+
+        </div>
+
+
+    </div>
+
+<script src="{% static 'orders.js' %}"></script>
+<script src="{% static 'index.js' %}"></script>
+<script>
+    const preloader = document.querySelector('.preloader');
+    let colorIndex = 0;
+    const colors = ['#007bff', '#28a745', '#dc3545', '#ffc107']; // Add more colors as needed
+
+    setInterval(() => {
+        preloader.style.borderTopColor = colors[colorIndex];
+        colorIndex = (colorIndex + 1) % colors.length;
+    }, 1000);
+
+    window.addEventListener('load', () => {
+        preloader.classList.add('hidden'); // Hide the preloader when the page loads
+        document.querySelector('.container').classList.add('visible'); // Show the container
+    });
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7871394796063576"
+     crossorigin="anonymous"></script>
+<script>
+    AOS.init();
+</script>
+    
+</body>
+
+</html>+

@@ -1,0 +1,114 @@
+
+{% extends 'lib/main.html' %}
+{% load static %}
+{% block title %}
+UniAbujaFlex | library departments
+{% endblock title %}
+{% block moreheader %}
+<meta name="description" content="UniAbujaFlex is your go-to e-library platform offering academic resources, including book handouts and past questions, along with a vibrant student community for collaboration and learning. Join us today!">
+<meta name="keywords" content="UniAbujaFlex, UniAbuja, University of Abuja, e-library, academic resources, book handouts, past questions, student community, collaboration, learning">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="UniAbujaFlex - Empowering Students with Academic Resources and Community">
+<meta property="og:description" content="UniAbujaFlex is your go-to e-library platform offering academic resources, including book handouts and past questions, along with a vibrant student community for collaboration and learning. Join us today!">    
+<meta property="og:image" content="/static/home/images/logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="UniAbujaFlex - Empowering Students with Academic Resources and Community">
+<meta name="twitter:description" content="UniAbujaFlex is your go-to e-library platform offering academic resources, including book handouts and past questions, along with a vibrant student community for collaboration and learning. Join us today!">    
+<meta name="twitter:image" content="/static/home/images/logo.png">
+{% endblock moreheader %}
+
+{% block container %}
+<div class="container">
+    <!-- Sidebar -->
+    <aside>
+        <div class="toggle">
+            <div class="logo">
+                <img src="{% static 'images/logo.png' %}">
+                <h2>UniAbuja<span class="danger">Flex</span></h2>
+            </div>
+            <div class="close" id="close-btn">
+                <span class="material-icons-sharp">close</span>
+            </div>
+        </div>
+        <div class="sidebar">
+            <a href="{% url 'library:faculty_list' %}" class="active">
+                <span class="material-icons-sharp">book</span>
+                <h3>book</h3>
+            </a>
+            <a href="{% url 'location:location_list' %}">
+                <span class="material-icons-sharp">map</span>
+                <h3>Map</h3>
+            </a>
+            <a href="https://portal.uniabuja.edu.ng/index.php">
+                <span class="material-icons-sharp">map</span>
+                <h3>Portal</h3>
+            </a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'user:sign-out' %}">
+                    <span class="material-icons-sharp">
+                        logout
+                    </span>
+                    <h3>Logout</h3>
+                </a>
+            <!-- Display login link if user is not authenticated -->
+            {% else %}
+                <a href="{% url 'user:sign-in' %}">
+                    <span class="material-icons-sharp">
+                        login
+                    </span>
+                    <h3>Login</h3>
+                </a>
+            {% endif %}
+        </div>
+    </aside>
+
+    <!-- Main content -->
+    <main>
+
+        <h1>Department of {{department.name}} </h1>
+        <div class="new-users">
+            <h2>Course List</h2>
+            <div class="user-list">
+                <div class="analyse">
+                    {% for course in courses %}
+                    <div class="sales" style="border: red solid 1px; background-image: url('{{ department.image.url }}'); background-size: cover; background-position: center center; width: 30vh; height: 15vh; display: flex; justify-content: center; align-items: center; position: relative;">
+                        <div class="status" style="text-align: center;">
+                            <div class="info">
+                                <h3>
+                                    <a href="{% url 'library:ebook_list' course_id=course.id %}">
+                                        <b style="color: black; height: 10px; width: auto; background-color: wheat; border: goldenrod solid 1px; border-radius: 50px; padding: 5px 10px; ">
+                                            {{ course.course_code }}
+                                        </b>
+                                    </a>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Right section -->
+    <div class="right-section">
+        <div class="nav">
+            <button id="menu-btn">
+                <span class="material-icons-sharp">menu</span>
+            </button>
+            <div class="dark-mode">
+                <span class="material-icons-sharp active">light_mode</span>
+                <span class="material-icons-sharp">dark_mode</span>
+            </div>
+        </div>
+    </div>
+</div>
+<a href=""></a>
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{% endblock container %}
+
+
+
