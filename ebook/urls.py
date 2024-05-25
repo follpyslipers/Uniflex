@@ -23,6 +23,10 @@ from django.contrib.sitemaps.views import sitemap
 from library.sitemaps import FacultySitemap, DepartmentSitemap, CourseSitemap, EBookSitemap
 from location.sitemaps import LocationSitemap
 
+
+handler404 = custom_page_not_found
+
+
 urlpatterns = [
     path('superadmin/', admin.site.urls),
     path('library/', include('library.urls') ),
@@ -44,3 +48,12 @@ sitemaps = {
     'locations': LocationSitemap,
 }
 
+################################################################
+
+from django.conf.urls import handler404
+from django.shortcuts import render
+
+def custom_page_not_found(request, exception):
+    return render(request, '404.html', status=404)
+
+handler404 = custom_page_not_found
