@@ -17,6 +17,8 @@ class Location(models.Model):
     google_link = models.URLField(max_length=900)
     nick_name = models.OneToOneField(NickName, on_delete=models.CASCADE ,blank=True , null=True)
     categories = models.ManyToManyField(Category)
+    updated_at = models.DateTimeField(auto_now=True, blank=True , null=True)
+    
     def __str__(self):
         return self.name
     

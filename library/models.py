@@ -22,6 +22,7 @@ def user_directory_path(instance, filename):
 class Faculty(models.Model):
     name = models.CharField(max_length=100)
     image = models.ImageField(upload_to='faculty/images')
+    updated_at = models.DateTimeField(auto_now=True, blank=True , null=True)
     
     
     @property
@@ -43,6 +44,8 @@ class Department(models.Model):
     name = models.CharField(max_length=100)
     faculty = models.ForeignKey(Faculty, related_name='departments', on_delete=models.CASCADE)
     image = models.ImageField(upload_to="department/images")
+    updated_at = models.DateTimeField(auto_now=True, blank=True , null=True)
+    
 
     def __str__(self):
         return self.name
@@ -55,6 +58,8 @@ class Course(models.Model):
     course_code = models.CharField(max_length=20)
     title = models.CharField(max_length=70, blank=True, null=True)
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
+    updated_at = models.DateTimeField(auto_now=True, blank=True , null=True)
+    
 
     def __str__(self):
         return self.course_code

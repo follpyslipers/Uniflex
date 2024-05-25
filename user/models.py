@@ -15,7 +15,7 @@ class User(AbstractUser):
     is_class_rep = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'matric_number'
-    REQUIRED_FIELDS = ['username']
+    REQUIRED_FIELDS = ['username','email']
 
     def __str__(self):
         return self.username

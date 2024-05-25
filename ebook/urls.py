@@ -18,11 +18,29 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path , include
+from django.contrib import sitemaps
+from django.contrib.sitemaps.views import sitemap
+from library.sitemaps import FacultySitemap, DepartmentSitemap, CourseSitemap, EBookSitemap
+from location.sitemaps import LocationSitemap
 
 urlpatterns = [
     path('superadmin/', admin.site.urls),
     path('library/', include('library.urls') ),
     path('account/', include('user.urls')),
+    # path('site_analsys/', include('site_analsys.urls')),
     path('', include('core.urls') ),
-    path('location/', include('location.urls') )
+    path('location/', include('location.urls') ),
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
+    
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+
+sitemaps = {
+    'faculties': FacultySitemap,
+    'departments': DepartmentSitemap,
+    'courses': CourseSitemap,
+    'ebooks': EBookSitemap,
+    'locations': LocationSitemap,
+}
+

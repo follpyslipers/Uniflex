@@ -29,7 +29,14 @@ SECRET_KEY = 'django-insecure-lbdqe-r26a87u!is#s#%aa-+e+tt4$kwdqs@!&om0^4-fyjd)j
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['uniflex.onrender.com','www.uniabujaflex.com.ng','localhost','172.0.0.1']
+ALLOWED_HOSTS = [
+    'uniflex.onrender.com',
+    'www.uniabujaflex.com.ng',
+    'localhost',
+    '127.0.0.1',  # Loopback address for local development
+    '0.0.0.0'     # Optional: Allow binding to all interfaces for local development
+]
+
 
 # ALLOWED_HOSTS = []
 
@@ -58,10 +65,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sitemaps',
+    # 'django_seo_js',
     'library',
     'core',
     'location',
-    'user',   
+    'user', 
+    'site_analsys',
+    # 'seo'
     
 ]
 
@@ -74,7 +85,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    #more middelware
     'django.middleware.security.SecurityMiddleware',
+    'site_analsys.middleware.VisitorTrackingMiddleware',
+    
     
 ]
 
@@ -116,6 +130,21 @@ DATABASES = {
         'NAME':  'db.sqlite3',
     }
 }
+
+
+
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'uniabujaflex',
+#         'USER': 'Follpysliper',
+#         'PASSWORD': 'mypassword',
+#         'HOST': 'uniabujaflex.cpgu0ygiudke.eu-north-1.rds.amazonaws.com',
+#         'PORT': '5432',
+#     }
+# }
 
 
 # Password validation

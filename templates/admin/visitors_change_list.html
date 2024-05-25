@@ -1,0 +1,26 @@
+{% extends "admin/change_list.html" %}
+
+{% block content %}
+    <h2>Daily Visitors</h2>
+    <p>Number of visitors today: {{ visitors_today }}</p>
+
+    <h2>Visitor Engagement</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Page</th>
+                <th>Visits</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in engagement %}
+            <tr>
+                <td>{{ item.page_visited }}</td>
+                <td>{{ item.visits }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {{ block.super }}
+{% endblock %}
