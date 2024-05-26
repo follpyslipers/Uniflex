@@ -76,6 +76,13 @@
         button:hover {
             background-color: #0056b3;
         }
+
+        .offline-message {
+            display: none;
+            color: red;
+            font-size: 18px;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -89,13 +96,33 @@
             <div class="icon-bottom"></div>
         </div>
         <h1>404</h1>
-        <p>Oops! The page you're looking for doesn't exist.</p>
+        <p id="not-found-message">Oops! The page you're looking for doesn't exist.</p>
+        <div class="offline-message" id="offline-message">
+            It seems you are not connected to the internet. Please check your connection and try again.
+        </div>
         <button id="goBackButton">Go Back</button>
     </div>
     <script>
         document.getElementById('goBackButton').addEventListener('click', function() {
             window.history.back();
         });
+
+        // Check if the user is offline
+        function updateOnlineStatus() {
+            const offlineMessage = document.getElementById('offline-message');
+            const notFoundMessage = document.getElementById('not-found-message');
+            if (!navigator.onLine) {
+                offlineMessage.style.display = 'block';
+                notFoundMessage.style.display = 'none';
+            } else {
+                offlineMessage.style.display = 'none';
+                notFoundMessage.style.display = 'block';
+            }
+        }
+        window.addEventListener('online', updateOnlineStatus);
+        window.addEventListener('offline', updateOnlineStatus);
+        // Initial check
+        updateOnlineStatus();
     </script>
 </body>
 </html>
