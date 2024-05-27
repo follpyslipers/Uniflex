@@ -28,6 +28,19 @@ from django.views.generic import TemplateView
 from django.contrib import sitemaps
 from django.contrib.sitemaps.views import sitemap
 from library.sitemaps import FacultySitemap, DepartmentSitemap, CourseSitemap, EBookSitemap
+from user.sitemap import UserSitemap
+from django.contrib.sitemaps import Sitemap
+
+class AdsTxtSitemap(Sitemap):
+    changefreq = 'monthly'
+    priority = 0.5  # Adjust priority as needed
+
+    def items(self):
+        return ['ads_txt']  # Unique identifier for the ads.txt URL
+
+    def location(self, item):
+        return '/ads.txt'  # Actual URL for ads.txt
+
 
 sitemaps = {
     'faculties': FacultySitemap,
@@ -36,6 +49,8 @@ sitemaps = {
     'ebooks': EBookSitemap,
     'static': StaticViewSitemap,
     'location':LocationSitemap,
+    'user': UserSitemap,
+    'ads_txt': AdsTxtSitemap,
 }
 
 
