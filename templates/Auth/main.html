@@ -8,7 +8,18 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="{% static 'auth/style.css' %}">
     <title>{% block title %}{% endblock title %}</title>
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flickity/2.0.5/flickity.min.css">
+    <link rel="website icon" type="png" href="static/home/images/logo.png">
+    <link rel="shortcut icon" href="static/home/images/logo.png" type="png">
+    <meta name="google-adsense-account" content="ca-pub-7871394796063576">
+    <link rel="manifest" href="{% static 'manifest.json' %}">
+    <link rel="icon" sizes="192x192" href="static/home/images/logo.png" type="image/x-icon">
+    <link rel="apple-touch-icon" href="static/home/images/logo.png">
+    <meta name="theme-color" content="#000000">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
     <meta name="description" content="UniAbujaFlex is your go-to e-library platform offering academic resources, including book handouts and past questions, along with a vibrant student community for collaboration and learning. Join us today!">
     <meta name="keywords" content="UniAbujaFlex, UniAbuja, University of Abuja, e-library, academic resources, book handouts, past questions, student community, collaboration, learning">
     <meta name="robots" content="index, follow">
@@ -68,6 +79,27 @@
             document.querySelector('.container').classList.add('visible'); // Show the container
         });
     </script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('{% static "service-worker.js" %}').then(function(registration) {
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }, function(error) {
+                    console.log('ServiceWorker registration failed: ', error);
+                });
+            });
+        }
+    </script>
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "UniAbujaFlex",
+            "logo": "static/home/images/logo.png"
+        }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7871394796063576"
+    crossorigin="anonymous"></script>
 </body>
 
 </html>
