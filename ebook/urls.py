@@ -19,13 +19,24 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path , include
 from django.contrib import sitemaps
+from core.sitemap import StaticViewSitemap
 from django.contrib.sitemaps.views import sitemap
-from library.sitemaps import FacultySitemap, DepartmentSitemap, CourseSitemap, EBookSitemap
 from location.sitemaps import LocationSitemap
 from django.conf.urls import handler404
 from django.shortcuts import render
 from django.views.generic import TemplateView
+from django.contrib import sitemaps
+from django.contrib.sitemaps.views import sitemap
+from library.sitemaps import FacultySitemap, DepartmentSitemap, CourseSitemap, EBookSitemap
 
+sitemaps = {
+    'faculties': FacultySitemap,
+    'departments': DepartmentSitemap,
+    'courses': CourseSitemap,
+    'ebooks': EBookSitemap,
+    'static': StaticViewSitemap,
+    'location':LocationSitemap,
+}
 
 
 
@@ -43,13 +54,12 @@ urlpatterns = [
 
 
 
-sitemaps = {
-    'faculties': FacultySitemap,
-    'departments': DepartmentSitemap,
-    'courses': CourseSitemap,
-    'ebooks': EBookSitemap,
-    'locations': LocationSitemap,
-}
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+
+
+
 
 ################################################################
 

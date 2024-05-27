@@ -8,9 +8,9 @@ def location_list(request):
         query = request.GET.get('q')
         page = request.GET.get('page', 1)  # Get the current page number from the request
         locations = Location.search(query) if query else Location.objects.all()
-        
+
         # Pagination
-        paginator = Paginator(locations, 6)  # 10 locations per page
+        paginator = Paginator(locations, 6)  # 6 locations per page
         try:
             locations_page = paginator.page(page)
         except PageNotAnInteger:
@@ -34,7 +34,7 @@ def location_list(request):
         })
     else:  # Render the initial page
         locations = Location.objects.all()
-        paginator = Paginator(locations, 6)  # 10 locations per page
+        paginator = Paginator(locations, 6)  # 6 locations per page
         page = request.GET.get('page', 1)
         try:
             locations_page = paginator.page(page)
@@ -42,6 +42,11 @@ def location_list(request):
             locations_page = paginator.page(1)
         except EmptyPage:
             locations_page = paginator.page(paginator.num_pages)
+
+        # If an ID is passed in the query parameters, filter locations
+        location_id = request.GET.get('id')
+        if location_id:
+            locations = locations.filter(id=location_id)
 
         return render(request, 'location_list.html', {
             'locations': locations_page,

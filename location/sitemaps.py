@@ -1,4 +1,5 @@
 from django.contrib.sitemaps import Sitemap
+from django.urls import reverse
 from .models import Location
 
 class LocationSitemap(Sitemap):
@@ -9,4 +10,7 @@ class LocationSitemap(Sitemap):
         return Location.objects.all()
 
     def lastmod(self, obj):
-        return obj.updated_at  # Assuming you have a field `updated_at` in your model
+        return obj.updated_at
+
+    def location(self, obj):
+        return reverse('location:location_list') + f"?id={obj.id}"

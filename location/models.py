@@ -1,4 +1,6 @@
 from django.db import models
+from django.urls import reverse
+
 
 class Category(models.Model):
     name = models.CharField(max_length=255, unique=True)
@@ -21,6 +23,11 @@ class Location(models.Model):
     
     def __str__(self):
         return self.name
+  
+  
+
+    def get_absolute_url(self):
+        return reverse('location:location_list', args=[self.id])  
     
     @classmethod
     def search(cls, query):

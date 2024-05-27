@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import FileExtensionValidator
+from django.urls import reverse
 
 
 def default_cover_image():
@@ -28,6 +29,8 @@ class Faculty(models.Model):
     updated_at = models.DateTimeField(auto_now=True, blank=True , null=True)
     
     
+ 
+    
     @property
     def image_url(self):
         return self.image.url if self.image else ''  # Return empty string if no image is set
@@ -38,6 +41,9 @@ class Faculty(models.Model):
 
     def __str__(self):
         return self.name
+    
+    def get_absolute_url(self):
+        return reverse('library:faculty_list')
 
     class Meta:
         ordering = ['name']  # Order by name
@@ -52,7 +58,9 @@ class Department(models.Model):
 
     def __str__(self):
         return self.name
-
+    
+    def get_absolute_url(self):
+        return reverse('library:department_list', args=[self.faculty.id])
     class Meta:
         ordering = ['name']  # Order by name
 
@@ -63,6 +71,10 @@ class Course(models.Model):
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
     updated_at = models.DateTimeField(auto_now=True, blank=True , null=True)
     
+
+
+    def get_absolute_url(self):
+        return reverse('library:course_list', args=[self.department.id])
 
     def __str__(self):
         return self.course_code
@@ -80,11 +92,16 @@ class E_Book(models.Model):
         validators=[FileExtensionValidator(allowed_extensions=['pdf', 'epub', 'mobi', 'txt', 'ppt', 'pptx', 'doc', 'docx'])],
     )
     cover_image = models.ImageField(upload_to='ebooks/covers/', default=default_cover_image)
+    updated_at = models.DateTimeField(auto_now=True) 
     uploaded_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default=AWAITING_APPROVAL, blank=True, null=True)
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('library:ebook_list', args=[self.course.id]) 
+
 
     # Custom search method for e-books
     @classmethod
