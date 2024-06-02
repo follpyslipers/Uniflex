@@ -44,3 +44,8 @@ def about(request):
     return render(request, 'home/about.html',{'form': form})
 
 
+# myapp/views.py
+
+
+def school_portal(request):
+    return render(request, 'home/school.html')

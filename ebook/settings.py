@@ -15,6 +15,7 @@ import os
 from decouple import config
 import environ
 import dj_database_url
+import psycopg2
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -36,6 +37,7 @@ ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',  # Loopback address for local development
     '0.0.0.0'     # Optional: Allow binding to all interfaces for local development
+    'uniflex-production.up.railway.app'
 ]
 
 
@@ -125,12 +127,12 @@ WSGI_APPLICATION = 'ebook.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME':  'db.sqlite3',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME':  'db.sqlite3',
+#     }
+# }
 
 
 
@@ -138,14 +140,15 @@ DATABASES = {
 
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'uniabujaflex',
-#         'USER': 'Follpysliper',
-#         'PASSWORD': 'mypassword',
-#         'HOST': 'uniabujaflex.cpgu0ygiudke.eu-north-1.rds.amazonaws.com',
-#         'PORT': '5432',
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'your_database_name',
+#         'USER': 'your_database_user',
+#         'PASSWORD': 'your_database_password',
+#         'HOST': 'your_database_host',  # Set to 'localhost' if the database is on the same machine
+#         'PORT': 'uniabujafle.cpgu0ygiudke.eu-north-1.rds.amazonaws.com',  # Set to '' for default
 #     }
 # }
+
 
 
 # Password validation
