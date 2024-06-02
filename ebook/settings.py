@@ -14,8 +14,7 @@ from pathlib import Path
 import os
 from decouple import config
 import environ
-# import dj_database_url
-# import psycopg2
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,30 +24,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-lbdqe-r26a87u!is#s#%aa-+e+tt4$kwdqs@!&om0^4-fyjd)j'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = [
-    'uniflex.onrender.com',
-    'www.uniabujaflex.com.ng',
-    'uniabujaflex.com.ng',  # Add this line
-    'localhost',
-    '127.0.0.1',  # Loopback address for local development
-    '0.0.0.0',    # Optional: Allow binding to all interfaces for local development
-    'uniflex-production.up.railway.app'
-]
+# SECRET_KEY = 'django-insecure-lbdqe-r26a87u!is#s#%aa-+e+tt4$kwdqs@!&om0^4-fyjd)j'
 
 
 
-# ALLOWED_HOSTS = []
 
 
-
-# Initialize environment variables
-# env = environ.Env()
-# environ.Env.read_env()  # Read .env file
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -128,12 +109,12 @@ WSGI_APPLICATION = 'ebook.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME':  'db.sqlite3',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME':  'db.sqlite3',
+#     }
+# }
 
 
 
@@ -141,15 +122,14 @@ DATABASES = {
 
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'your_database_name',
-#         'USER': 'your_database_user',
-#         'PASSWORD': 'your_database_password',
-#         'HOST': 'your_database_host',  # Set to 'localhost' if the database is on the same machine
-#         'PORT': 'uniabujafle.cpgu0ygiudke.eu-north-1.rds.amazonaws.com',  # Set to '' for default
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'uniabujaflex',
+#         'USER': 'Follpysliper',
+#         'PASSWORD': 'mypassword',
+#         'HOST': 'uniabujaflex.cpgu0ygiudke.eu-north-1.rds.amazonaws.com',
+#         'PORT': '5432',
 #     }
 # }
-
 
 
 # Password validation
@@ -331,3 +311,36 @@ JAZZMIN_UI_TWEAKS = {
         "settings": "fas fa-cog"
     }
 }
+
+
+
+# Initialize environment variables
+env = environ.Env(
+    # Set default values and casting
+    DEBUG=(bool, False)
+)
+
+# Reading .env file
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = env('DEBUG')
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = env('SECRET_KEY')
+
+# Allowed hosts
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost', '127.0.0.1'])
+
+# Database
+# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+DATABASES = {
+    'default': env.db(),
+}
+
+# Example static and media settings (optional)
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
