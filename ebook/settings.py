@@ -159,8 +159,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+CSRF_FAILURE_VIEW = 'your_app.views.csrf_failure'
+
+
 CSRF_TRUSTED_ORIGINS = [
     'https://www.uniabujaflex.com.ng',
+    'https://uniabujaflex.com.ng',
     'https://uniflex.onrender.com',
     'https://uniflex-production.up.railway.app',
     # Add other trusted origins with schemes
