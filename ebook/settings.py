@@ -159,7 +159,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-CSRF_FAILURE_VIEW = 'your_app.views.csrf_failure'
+# CSRF_FAILURE_VIEW = 'your_app.views.csrf_failure'
 
 
 CSRF_TRUSTED_ORIGINS = [
