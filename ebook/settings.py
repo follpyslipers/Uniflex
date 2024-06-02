@@ -30,15 +30,16 @@ SECRET_KEY = 'django-insecure-lbdqe-r26a87u!is#s#%aa-+e+tt4$kwdqs@!&om0^4-fyjd)j
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-
 ALLOWED_HOSTS = [
     'uniflex.onrender.com',
     'www.uniabujaflex.com.ng',
+    'uniabujaflex.com.ng',  # Add this line
     'localhost',
     '127.0.0.1',  # Loopback address for local development
-    '0.0.0.0'     # Optional: Allow binding to all interfaces for local development
+    '0.0.0.0',    # Optional: Allow binding to all interfaces for local development
     'uniflex-production.up.railway.app'
 ]
+
 
 
 # ALLOWED_HOSTS = []
