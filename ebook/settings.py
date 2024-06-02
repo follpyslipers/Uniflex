@@ -27,6 +27,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECRET_KEY = 'django-insecure-lbdqe-r26a87u!is#s#%aa-+e+tt4$kwdqs@!&om0^4-fyjd)j'
 
 
+ALLOWED_HOSTS = [
+    'uniflex.onrender.com',
+    'www.uniabujaflex.com.ng',
+    'uniabujaflex.com.ng',  # Add this line
+    'localhost',
+    '127.0.0.1',  # Loopback address for local development
+    '0.0.0.0',    # Optional: Allow binding to all interfaces for local development
+    'uniflex-production.up.railway.app'
+]
 
 
 
@@ -330,7 +339,7 @@ DEBUG = env('DEBUG')
 SECRET_KEY = env('SECRET_KEY')
 
 # Allowed hosts
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost', '127.0.0.1'])
+# ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost', '127.0.0.1'])
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
