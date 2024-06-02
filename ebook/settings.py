@@ -160,10 +160,11 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    "www.uniabujaflex.com.ng",
-    'www.uniabujaflex.com.ng',
-    'https://uniabujaflex.com.ng'
-    ]
+    'https://www.uniabujaflex.com.ng',
+    'https://uniflex.onrender.com',
+    'https://uniflex-production.up.railway.app',
+    # Add other trusted origins with schemes
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
