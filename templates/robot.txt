@@ -1,0 +1,32 @@
+User-agent: *
+Disallow: /
+
+User-agent: Googlebot
+Disallow: /account/login/
+Disallow: /account/sign-out/
+Disallow: /account/register/
+Disallow: /superadmin/
+Allow: /
+
+User-agent: Googlebot-Image
+Disallow: /account/login/
+Disallow: /account/sign-out/
+Disallow: /account/register/
+Disallow: /superadmin/
+Allow: /
+
+User-agent: Googlebot-News
+Disallow: /account/login/
+Disallow: /account/sign-out/
+Disallow: /account/register/
+Disallow: /superadmin/
+Allow: /
+
+User-agent: Googlebot-Video
+Disallow: /account/login/
+Disallow: /account/sign-out/
+Disallow: /account/register/
+Disallow: /superadmin/
+Allow: /
+
+Sitemap: http://uniabujaflex.com.ng/sitemap.xml
