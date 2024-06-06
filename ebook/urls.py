@@ -42,6 +42,16 @@ class AdsTxtSitemap(Sitemap):
         return '/ads.txt'  # Actual URL for ads.txt
 
 
+class RobotsTxtSitemap(Sitemap):
+    changefreq = 'monthly'
+    priority = 0.5  # Adjust priority as needed
+
+    def items(self):
+        return ['robots_txt']  # Unique identifier for the ads.txt URL
+
+    def location(self, item):
+        return '/robots.txt'  # Actual URL for ads.txt
+
 sitemaps = {
     'faculties': FacultySitemap,
     'departments': DepartmentSitemap,
@@ -51,6 +61,7 @@ sitemaps = {
     'location':LocationSitemap,
     'user': UserSitemap,
     'ads_txt': AdsTxtSitemap,
+    'robots_txt': RobotsTxtSitemap,
 }
 
 
