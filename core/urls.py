@@ -10,6 +10,8 @@ urlpatterns = [
     path('privacy/', views.privacy_policy, name='privacy'),
     path('terms/', views.term_of_service, name='terms'),
     path('school_portal/', views.school_portal, name='school'),
-        
+    path('feedback/', views.feedback , name="feedback"),
+    path('feedback/thanks/', views.feedback_thanks_view, name='feedback_thanks'),
+    
 ]
 

@@ -49,3 +49,22 @@ def about(request):
 
 def school_portal(request):
     return render(request, 'home/school.html')
+
+# views.py
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from .forms import FeedBackForm
+from .models import FeedBack
+
+def feedback(request):
+    if request.method == 'POST':
+        form = FeedBackForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('core:feedback_thanks')
+    else:
+        form = FeedBackForm()
+    return render(request, 'home/feedback.html', {'form': form})
+
+def feedback_thanks_view(request):
+    return render(request, 'home/feedbacktnk.html')
