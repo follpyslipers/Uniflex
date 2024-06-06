@@ -1,28 +1,27 @@
 {% extends 'lib/main.html' %}
 {% load static %}
 {% block title %}
-UniAbujaFlex | library Faculty
+UniAbujaFlex | Library Faculty
 {% endblock title %}
 {% block moreheader %}
-
 <meta name="description" content="UniAbujaFlex is your go-to e-library platform offering academic resources, including book handouts and past questions, along with a vibrant student community for collaboration and learning. Join us today!">
 <meta name="keywords" content="UniAbujaFlex, UniAbuja, University of Abuja, e-library, academic resources, book handouts, past questions, student community, collaboration, learning">
 <meta name="robots" content="index, follow">
 <meta property="og:title" content="UniAbujaFlex - Empowering Students with Academic Resources and Community">
-<meta property="og:description" content="UniAbujaFlex is your go-to e-library platform offering academic resources, including book handouts and past questions, along with a vibrant student community for collaboration and learning. Join us today!">    
-<meta property="og:image" content="/static/home/images/logo.png">
+<meta property="og:description" content="UniAbujaFlex is your go-to e-library platform offering academic resources, including book handouts and past questions, along with a vibrant student community for collaboration and learning. Join us today!">
+<meta property="og:image" content="{% static 'home/images/logo.png' %}">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="UniAbujaFlex - Empowering Students with Academic Resources and Community">
-<meta name="twitter:description" content="UniAbujaFlex is your go-to e-library platform offering academic resources, including book handouts and past questions, along with a vibrant student community for collaboration and learning. Join us today!">    
-<meta name="twitter:image" content="/static/home/images/logo.png">
+<meta name="twitter:description" content="UniAbujaFlex is your go-to e-library platform offering academic resources, including book handouts and past questions, along with a vibrant student community for collaboration and learning. Join us today!">
+<meta name="twitter:image" content="{% static 'home/images/logo.png' %}">
 <link rel="canonical" href="https://www.uniabujaflex.com.ng/library/">
+<script src="{% static 'vue.config.js' %}"></script>
 <style>
     #facultySearchForm {
         display: flex;
         justify-content: center;
         align-items: center;
         height: 4vh; /* Adjust as needed to center vertically */
-
     }
 
     #facultySearchInput {
@@ -31,13 +30,97 @@ UniAbujaFlex | library Faculty
         border-radius: 50px;
         background-color: transparent;
         border: green solid 1px;
-        padding-left: 20px; 
+        padding-left: 20px;
     }
 
     #facultySearchInput::placeholder {
-        color: gray; /* Change this to the desired color */
-        font-style: italic; /* Example of additional styling */
+        color: gray;
+        font-style: italic;
         padding-left: 20px;
+    }
+
+    .pagination-btn {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin: 0 10px;
+    }
+
+    .pagination-btn:hover {
+        background-color: #0056b3;
+    }
+
+    @keyframes fadeInOut {
+        0% { opacity: 0; }
+        50% { opacity: 0.5; }
+        100% { opacity: 1; }
+    }
+
+    #paginationControls {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    #pageIndicator {
+        font-size: 16px;
+        margin: 0 10px;
+    }
+
+    .faculty-card {
+        display: block;
+        position: relative;
+        width: 100%;
+        height: 200px;
+        border: 1px solid red;
+        background-size: cover;
+        background-position: center center;
+        text-decoration: none;
+        color: black;
+        overflow: hidden;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+
+    .faculty-card .status {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.8);
+        padding: 10px;
+        box-sizing: border-box;
+    }
+
+    .faculty-card .info h3 b {
+        background-color: wheat;
+        border: 1px solid black;
+        border-radius: 10px;
+        padding: 2px;
+        display: inline-block;
+    }
+
+    .faculty-card .progresss {
+        display: flex;
+        align-items: center;
+    }
+
+    .faculty-card .progresss svg {
+        width: 50px;
+        height: 50px;
+    }
+
+    .faculty-card .percentage p {
+        margin-left: 10px;
+        background-color: wheat;
+        border: 1px solid black;
+        border-radius: 10px;
+        padding: 2px;
+        color: red;
     }
 </style>
 {% endblock moreheader %}
@@ -51,51 +134,36 @@ UniAbujaFlex | library Faculty
                 <h2>UniAbuja<span class="danger">Flex</span></h2>
             </div>
             <div class="close" id="close-btn">
-                <span class="material-icons-sharp">
-                    close
-                </span>
+                <span class="material-icons-sharp">close</span>
             </div>
         </div>
 
-        <div class="sidebar" >
+        <div class="sidebar">
             <a href="https://portal.uniabuja.edu.ng/index.php">
-                <span class="material-icons-sharp">
-                    apps
-                </span>
+                <span class="material-icons-sharp">apps</span>
                 <h3>School Portal</h3>
             </a>
-            <a href="{% url 'library:faculty_list' %}" class="active" >
-                <span class="material-icons-sharp">
-                book
-                </span>
+            <a href="{% url 'library:faculty_list' %}" class="active">
+                <span class="material-icons-sharp">book</span>
                 <h3>Book</h3>
             </a>
-            <a href="{% url 'location:location_list' %}">      
-                <span class="material-icons-sharp">
-                    map
-                </span>
+            <a href="{% url 'location:location_list' %}">
+                <span class="material-icons-sharp">map</span>
                 <h3>Map</h3>
             </a>
-            
             {% if user.is_authenticated %}
                 <a href="{% url 'user:sign-out' %}">
-                    <span class="material-icons-sharp">
-                        logout
-                    </span>
+                    <span class="material-icons-sharp">logout</span>
                     <h3>Logout</h3>
                 </a>
-            <!-- Display login link if user is not authenticated -->
             {% else %}
                 <a href="{% url 'user:sign-in' %}">
-                    <span class="material-icons-sharp">
-                        login
-                    </span>
+                    <span class="material-icons-sharp">login</span>
                     <h3>Login</h3>
                 </a>
             {% endif %}
         </div>
     </aside>
-
 
     <!-- Main content -->
     <main>
@@ -104,7 +172,7 @@ UniAbujaFlex | library Faculty
         <div class="new-users">
             <div class="user-list">
                 <div class="analyse">
-                    <form id="facultySearchForm" style=" justify-content: center; display: flex; align-items: center; ">
+                    <form id="facultySearchForm" style="justify-content: center; display: flex; align-items: center;">
                         <input type="text" id="facultySearchInput" placeholder="Search faculties...">
                     </form>
                 </div>
@@ -118,6 +186,13 @@ UniAbujaFlex | library Faculty
                     <!-- Filtered faculties will be displayed here -->
                 </div>
             </div>
+        </div>
+        
+        <!-- Pagination controls -->
+        <div id="paginationControls">
+            <button id="prevPageBtn" class="pagination-btn animated-btn" style="display: none;">Previous</button>
+            <span id="pageIndicator"></span>
+            <button id="nextPageBtn" class="pagination-btn animated-btn" style="display: none;">Next</button>
         </div>
     </main>
 
@@ -139,69 +214,77 @@ UniAbujaFlex | library Faculty
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
-        // Fetch and display all faculties initially
-        $.ajax({
-            type: 'GET',
-            url: '{% url "library:faculty_list" %}',
-            success: function(data) {
-                displayFilteredFaculties(data.faculties);
-            }
-        });
-    
+        function fetchFaculties(page = 1, query = '') {
+            $.ajax({
+                type: 'GET',
+                url: '{% url "library:faculty_list" %}',
+                data: { 'q': query, 'page': page },
+                success: function(data) {
+                    displayFilteredFaculties(data.faculties);
+                    updatePaginationControls(data);
+                }
+            });
+        }
+
         $('#facultySearchInput').on('input', function() {
             var query = $(this).val().trim();
-            if (query.length > 0) {
-                $.ajax({
-                    type: 'GET',
-                    url: '{% url "library:faculty_list" %}',
-                    data: { 'q': query },
-                    success: function(data) {
-                        displayFilteredFaculties(data.faculties);
-                    }
-                });
-            } else {
-                // If search input is empty, show all faculties again
-                $.ajax({
-                    type: 'GET',
-                    url: '{% url "library:faculty_list" %}',
-                    success: function(data) {
-                        displayFilteredFaculties(data.faculties);
-                    }
-                });
-            }
+            fetchFaculties(1, query);
         });
-    
+
+        $('#prevPageBtn').on('click', function() {
+            var currentPage = parseInt($('#pageIndicator').text());
+            fetchFaculties(currentPage - 1, $('#facultySearchInput').val().trim());
+        });
+
+        $('#nextPageBtn').on('click', function() {
+            var currentPage = parseInt($('#pageIndicator').text());
+            fetchFaculties(currentPage + 1, $('#facultySearchInput').val().trim());
+        });
+
         function displayFilteredFaculties(faculties) {
             $('#facultyResults .analyse').empty();  // Clear previous results
             if (faculties.length === 0) {
                 $('#facultyResults .analyse').append(
-                    `<div class="no-results">No faculties found matching your search. <a href=""> Click To Add Faculty</a></div>`
+                    `<div class="no-results">No faculties found matching your search. <a href="#"> Click To Add Faculty</a></div>`
                 );
             } else {
                 faculties.forEach(faculty => {
                     let facultyURL = `/library/faculty/${faculty.id}/departments/`;
                     $('#facultyResults .analyse').append(
-                        `<div class="sales" style="border: red solid 1px; background-image: url('${faculty.image_url}'); background-size: cover; background-position: center center;">
-                            <div class="status">
-                                <div class="info">
-                                    <h3><a href="${facultyURL}"><b style="color: black; background-color: wheat; border: black solid 1px; border-radius: 10px; padding: 2px;">${faculty.name}</b></a></h3>
-                                </div>
-                                <div class="progresss">
-                                    <svg>
-                                        <circle cx="38" cy="38" r="36"></circle>
-                                    </svg>
-                                    <div class="percentage">
-                                        <p style="color: red; background-color: wheat; border: black solid 1px; border-radius: 10px; padding: 2px;">${faculty.num_departments}</p>
+                        `<a href="${facultyURL}">
+                            <div class="sales" style="border: red solid 1px; background-image: url('${faculty.image_url}'); background-size: cover; background-position: center center;">
+                                <div class="status">
+                                    <div class="info">
+                                        <h3><a href="${facultyURL}"><b style="color: black; background-color: wheat; border: black solid 1px; border-radius: 10px; padding: 2px;">${faculty.name}</b></a></h3>
+                                    </div>
+                                    <div class="progresss">
+                                        <svg>
+                                            <circle cx="38" cy="38" r="36"></circle>
+                                        </svg>
+                                        <div class="percentage">
+                                            <p style="color: red; background-color: wheat; border: black solid 1px; border-radius: 10px; padding: 2px;">${faculty.num_departments}</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>`
+                        </a>`
                     );
-                });
+                });                             
             }
         }
+
+        function updatePaginationControls(data) {
+            $('#pageIndicator').text(data.current_page);
+            $('#prevPageBtn').toggle(data.has_previous);
+            $('#nextPageBtn').toggle(data.has_next);
+        }
+
+        // Fetch and display all faculties initially
+        fetchFaculties();
     });
-    
-    
 </script>
 {% endblock container %}
+
+
+
+

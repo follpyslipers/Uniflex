@@ -1,30 +1,43 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Faculty, Department, Course, E_Book
 from django.http import JsonResponse
-from .models import Faculty
+from django.core.paginator import Paginator
+
+
 
 def done (request):
     return render(request, 'done.html')
 
 
-from django.http import JsonResponse
-from django.shortcuts import render
-from .models import Faculty
+
+
 
 def faculty_list(request):
-    if request.headers.get('x-requested-with') == 'XMLHttpRequest':  # Check if it's an AJAX request for live filtering
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         query = request.GET.get('q')
         faculties = Faculty.objects.filter(name__icontains=query) if query else Faculty.objects.all()
+
+        # Add pagination
+        paginator = Paginator(faculties, 6)  # Show 10 faculties per page
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
         faculty_data = [
             {
                 'id': faculty.id,
                 'name': faculty.name,
-                'image_url': faculty.image_url,  # Use the image_url property
-                'num_departments': faculty.num_departments  # Use the num_departments property
-            } for faculty in faculties
+                'image_url': faculty.image_url,
+                'num_departments': faculty.num_departments
+            } for faculty in page_obj
         ]
-        return JsonResponse({'faculties': faculty_data})
-    else:  # Render the initial page
+
+        return JsonResponse({
+            'faculties': faculty_data,
+            'current_page': page_obj.number,
+            'has_previous': page_obj.has_previous(),
+            'has_next': page_obj.has_next()
+        })
+    else:
         faculties = Faculty.objects.all()
         return render(request, 'lib/faculty_list.html', {'faculties': faculties})
 

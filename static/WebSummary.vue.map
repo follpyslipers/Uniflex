@@ -1,0 +1,40 @@
+const webpack = require('webpack');
+
+module.exports = {
+  // Dev server configuration
+  devServer: {
+    port: 8080, // Set the dev server port
+    proxy: 'http://localhost:8000', // Proxy requests to your Django backend
+  },
+
+  // Webpack configuration
+  configureWebpack: {
+    devtool: 'source-map',
+    // Add plugins or other webpack configurations here
+    plugins: [
+      // Example plugins
+      new webpack.DefinePlugin({
+        'process.env': {
+          NODE_ENV: JSON.stringify('development'), // Set your environment variables
+        },
+      }),
+      // Add more plugins as needed
+    ],
+  },
+
+  // Webpack chain configuration
+  chainWebpack: config => {
+    // Adjust webpack chain configurations here, such as loaders or rules
+    config.module
+      .rule('images') // Example loader rule
+      .test(/\.(png|jpe?g|gif|webp)(\?.*)?$/i)
+      .use('file-loader')
+      .loader('file-loader')
+      .options({
+        name: 'img/[name].[hash:8].[ext]',
+      })
+      .end();
+
+    // Add more loader rules or adjust existing ones as needed
+  }
+}

@@ -34,7 +34,8 @@ ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',  # Loopback address for local development
     '0.0.0.0',    # Optional: Allow binding to all interfaces for local development
-    'uniflex-production.up.railway.app'
+    'uniflex-production.up.railway.app',
+    'registry.npmjs.org'
 ]
 
 
