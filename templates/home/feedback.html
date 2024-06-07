@@ -6,29 +6,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-
-    <!-- Bootstrap 5 -->
     <link rel="stylesheet" href="{% static 'feed/assets/css/bootstrap/bootstrap.min.css' %}">
-
-    <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- Custom Style -->
     <link rel="stylesheet" href="{% static 'feed/assets/css/style.css' %}">
-
-    <!-- responsive -->
     <link rel="stylesheet" href="{% static 'feed/assets/css/responsive.css' %}">
-
-    <!-- animation -->
     <link rel="stylesheet" href="{% static 'feed/assets/css/animation.css' %}">
-
-
-
-    
+    <link rel="website icon" type="png" href="static/home/images/logo.png">
+    <link rel="shortcut icon" href="static/home/images/logo.png" type="image/png">
+    <link rel="icon" href="static/home/images/logo.png" sizes="32x32" type="image/png">
+    <meta name="google-adsense-account" content="ca-pub-7871394796063576">
+    <meta name="theme-color" content="#000000">
+    <link rel="manifest" href="{% static 'manifest.json' %}">
+    <link rel="apple-touch-icon" href="static/home/images/logo.png">
+    <title> Uniflex | feedback</title>
 </head>
 <body>
     <main class="overflow-hideen">
-        <div class="animationTrigger container position-relative popup">
+            <div class="animationTrigger container position-relative popup" onclick="window.location.href='{% url 'core:home' %}'">                
             <div class="wrapper">
                 <div class="row">
                     <div class="col-md-5 dt-45 pe-0 order_c tab-100">
@@ -62,8 +56,6 @@
                                     <button class="cancel" type="button" onclick="window.location.href='{% url 'core:home' %}'">Cancel</button>
                                 </div>
                             </form>
-                            
-
                         </div>
                     </div>
                 </div>
@@ -73,19 +65,11 @@
             </div>
         </div>
     </main>
-    
-
-
-
-
-
-    <!-- Bootstrap 5 -->
-    <script src="{% static 'feed/assets/js/bootstrap/bootstrap.min.js' %}"></script>
-
-    <!-- jQuery -->
+    <footer style="bottom: 0; align-content: center; background-color: yellowgreen;">
+        <h6 style="text-align: center;"><p><span>UniAbujaFlex</span>&copy; <span>2024</span> All Rights Reserved</p></h6>
+    </footer>
+   <script src="{% static 'feed/assets/js/bootstrap/bootstrap.min.js' %}"></script>
     <script src="{% static 'feed/assets/js/jQuery/jquery-3.6.4.min.js' %}"></script>
-
-    <!-- My JS -->
     <script src="{% static 'feed/assets/js/custom.js' %}"></script>
 </body>
 </html>

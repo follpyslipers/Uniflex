@@ -27,6 +27,7 @@ Disallow: /account/login/
 Disallow: /account/sign-out/
 Disallow: /account/register/
 Disallow: /superadmin/
+Disallow: /feedback/thanks/
 Allow: /
 
 Sitemap: http://uniabujaflex.com.ng/sitemap.xml

@@ -250,25 +250,23 @@ UniAbujaFlex | Library Faculty
             } else {
                 faculties.forEach(faculty => {
                     let facultyURL = `/library/faculty/${faculty.id}/departments/`;
-                    $('#facultyResults .analyse').append(
-                        `<a href="${facultyURL}">
-                            <div class="sales" style="border: red solid 1px; background-image: url('${faculty.image_url}'); background-size: cover; background-position: center center;">
-                                <div class="status">
-                                    <div class="info">
-                                        <h3><a href="${facultyURL}"><b style="color: black; background-color: wheat; border: black solid 1px; border-radius: 10px; padding: 2px;">${faculty.name}</b></a></h3>
-                                    </div>
-                                    <div class="progresss">
-                                        <svg>
-                                            <circle cx="38" cy="38" r="36"></circle>
-                                        </svg>
-                                        <div class="percentage">
-                                            <p style="color: red; background-color: wheat; border: black solid 1px; border-radius: 10px; padding: 2px;">${faculty.num_departments}</p>
-                                        </div>
+                    $('#facultyResults .analyse').append(`
+                        <div class="sales" style="border: red solid 1px; background-image: url('${faculty.image_url}'); background-size: cover; background-position: center center;"   onclick="window.location.href='${facultyURL}'">
+                            <div class="status">
+                                <div class="info">
+                                    <h3><a href="${facultyURL}"><b style="color: black; background-color: wheat; border: black solid 1px; border-radius: 10px; padding: 2px;">${faculty.name}</b></a></h3>
+                                </div>
+                                <div class="progresss">
+                                    <svg>
+                                        <circle cx="38" cy="38" r="36"></circle>
+                                    </svg>
+                                    <div class="percentage">
+                                        <p style="color: red; background-color: wheat; border: black solid 1px; border-radius: 10px; padding: 2px;">${faculty.num_departments}</p>
                                     </div>
                                 </div>
                             </div>
-                        </a>`
-                    );
+                        </div>
+                    `);
                 });                             
             }
         }
