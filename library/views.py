@@ -1,24 +1,15 @@
-from django.shortcuts import render, get_object_or_404
-from .models import Faculty, Department, Course, E_Book
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
-from django.core.paginator import Paginator
-
-
-
-def done (request):
-    return render(request, 'done.html')
-
-
-
-
+from .models import Faculty, Department, Course, E_Book
+from .forms import EBookUploadForm
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 def faculty_list(request):
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         query = request.GET.get('q')
         faculties = Faculty.objects.filter(name__icontains=query) if query else Faculty.objects.all()
 
-        # Add pagination
-        paginator = Paginator(faculties, 6)  # Show 10 faculties per page
+        paginator = Paginator(faculties, 6)
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
 
@@ -41,87 +32,70 @@ def faculty_list(request):
         faculties = Faculty.objects.all()
         return render(request, 'lib/faculty_list.html', {'faculties': faculties})
 
-
-
-
-
-
 def department_list(request, faculty_id):
     faculty = get_object_or_404(Faculty, pk=faculty_id)
     departments = Department.objects.filter(faculty=faculty)
+
+    paginator = Paginator(departments, 6)
+    page_number = request.GET.get('page')
+    try:
+        departments = paginator.page(page_number)
+    except PageNotAnInteger:
+        departments = paginator.page(1)
+    except EmptyPage:
+        departments = paginator.page(paginator.num_pages)
+
     return render(request, 'lib/department_list.html', {'faculty': faculty, 'departments': departments})
-
-
 
 def course_list(request, department_id):
     department = get_object_or_404(Department, pk=department_id)
     courses = Course.objects.filter(department=department)
     return render(request, 'lib/course_list.html', {'department': department, 'courses': courses})
 
-
-
 def ebook_list(request, course_id):
     course = get_object_or_404(Course, pk=course_id)
     ebooks = E_Book.objects.filter(course=course)
     return render(request, 'lib/ebook_list.html', {'course': course, 'ebooks': ebooks})
 
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Faculty, Department, Course, E_Book
+from .forms import EBookUploadForm
 
-from django.shortcuts import render, redirect
-from .forms import EBookForm
+def ebook_upload(request, course_id=None):
+    course = None
+    if course_id:
+        course = get_object_or_404(Course, pk=course_id)
+    department = course.department if course else None
+    faculty = department.faculty if department else None
 
-def upload_ebook(request):
     if request.method == 'POST':
-        form = EBookForm(request.POST, request.FILES)
+        form = EBookUploadForm(request.POST, request.FILES)
+        course_code = request.POST.get('course_code')
         if form.is_valid():
             ebook = form.save(commit=False)
-            ebook.user = request.user  # Assuming you have a user field in your E_Book model
-            ebook.save()
-            return redirect('library:done')  # Redirect to the ebook list page or another appropriate view
+            if course_code:
+                try:
+                    course = Course.objects.get(course_code=course_code)
+                except Course.DoesNotExist:
+                    course = None
+            if course:
+                ebook.course = course
+                ebook.save()
+                return redirect('library:ebook_list', course_id=course.id)
+            else:
+                return render(request, 'lib/ebook_upload.html', {
+                    'form': form,
+                    'faculty': faculty,
+                    'department': department,
+                    'course': course,
+                    'error_message': 'No course found with the entered course code.'
+                })
     else:
-        form = EBookForm()
-    return render(request, 'upload_ebook.html', {'form': form})
+        form = EBookUploadForm()
 
-
-
-
-###################################################################################################################################################################
-
-import os
-from django.shortcuts import render
-from django.core.files import File
-from .models import Faculty, Department, Course, E_Book
-
-def upload_ebooks_folder(request):
-    if request.method == 'POST':
-        # Specify the directory where the e-books are located
-        ebooks_directory = "C:Users/USER/Desktop/Uniabujaflex/uniabuja_app/Malik pdfs"
-        
-
-        # Create a Faculty and Department with 'Untitled' names if they don't exist
-        faculty, _ = Faculty.objects.get_or_create(name='Untitled Faculty')
-        department, _ = Department.objects.get_or_create(name='Untitled Department', faculty=faculty)
-
-        # Iterate through the files in the specified directory
-        for filename in os.listdir(ebooks_directory):
-            # Assuming the file names are unique or can be uniquely identified
-            title, ext = os.path.splitext(filename)
-            if ext.lower() in ['.pdf', '.epub', '.mobi', '.txt', '.ppt', '.pptx', '.doc', '.docx']:
-                # Create a Course for each e-book with a unique course code
-                course, _ = Course.objects.get_or_create(course_code=f"CODE_{title}", department=department)
-                
-                # Create an E_Book instance and assign properties
-                ebook = E_Book.objects.create(
-                    title=title,
-                    description="Description goes here",
-                    course=course,
-                    status=E_Book.APPROVED,  # Assuming all e-books are approved
-                )
-                
-                # Open and upload the file to the E_Book instance
-                with open(os.path.join(ebooks_directory, filename), 'rb') as file:
-                    ebook.file.save(filename, File(file), save=True)
-
-        return render(request, 'upload_success.html')  # Render a success page after uploading
-    else:
-        return render(request, 'upload_form.html')  # Render a form for uploading e-books
-
+    return render(request, 'lib/ebook_upload.html', {
+        'form': form,
+        'faculty': faculty,
+        'department': department,
+        'course': course
+    })

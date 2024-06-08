@@ -81,87 +81,40 @@
             {% endif %}
             <h1>E-library</h1>
             <!-- Analyses -->
-            <div class="analyse">
-                <div class="sales" style="border: 1px solid red;
-                ">
-
-                    <div class="status">
-                        <div class="search-container" data-aos="fade-right" data-aos-delay="200" data-aos-duration="1000">
-                            <form method="GET">
-                                <input type="text" class="search-input" name="q" placeholder="Search books">
-                                <button type="submit" class="search-btn">Search</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div class="visits" style="border-color: gold; border: 1px dashed red;
-                ">
-                    {% comment %} <a href="{% url 'E_libary:upload_ebook' %}">
-                        <div class="status">
-                            <div class="info" style="padding-left: 23%;">
-                                <img src="{% static 'images/uploadimage.png' %}" alt="" style="height: 8rem; width: 100%;">
-                                <b><p style="top: 50%; color: red;">click Here To Uplaod E-book</p></b>
+            <div class="user-list">
+                <div class="analyse">
+                    <div class="visits" style="border-color: gold; border: 1px dashed red;
+                    ">
+                        <a href="{% url 'library:upload_ebook' course_id=course.id %}">
+                            <div class="status">
+                                <div class="info" style="padding-left: 23%;">
+                                    <img src="{% static 'images/uploadimage.png' %}" alt="" style="height: 8rem; width: 100%;">
+                                    <b><p style="top: 50%; color: red;">click Here To Uplaod E-book</p></b>
+                                </div>
                             </div>
-                        </div>
-                    </a> {% endcomment %}
-                </div>
-            </div>
-
-
-
-            <!-- End of Analyse Section -->
-        
-            <!-- New Users Section -->
-            <div class="new-users">
-                <h2>E-Book</h2>
-            
-                {% if ebooks %}
-                <div class="user-list" data-aos="fade-right" data-aos-delay="200" data-aos-duration="1000">
-                    {% for ebook in ebooks %}
-                        {% comment %} <a href="{% url 'E_libary:download_ebook' ebook.id %}"> {% endcomment %}
-                            <div class="user">
-                                <img src="{% static 'images/pdf.png' %}" alt="Cover Image">
-                                <h2>{{ ebook.title }}</h2>
-                                <p><b>{{ ebook.description }}</b></p>
-                            </div>
-                            <button type="button" style="border-radius: 50px; height:30px; margin-left:40%;width:70px;">
-                                <i class="fa-regular fa-download fa-bounce fa-2xl" style="color: #003694;"></i>
-                            </button>
                         </a>
+                    </div>
+                    
+                    {% for faculty in faculties %}
+                        {% comment %} <div class="sales" style="border: red solid 1px; background-image: url('{{ faculty.image.url }}'); background-size: cover; background-position: center center;" data-aos="fade-left" data-aos-delay="200" data-aos-duration="1000" alt=""> {% endcomment %}
+                            <div class="status">
+                                <div class="info">
+                                    {% comment %} <h3  ><a href="{% url 'library:department_list' faculty_id=faculty.id %}"><b style="color: black; height: 10px; width: auto; background-color: wheat; border: black solid 1px; border-radius: 10px 10px; padding: 2px 2px;">{{ faculty.name }}</b></a></h3> {% endcomment %}
+                                </div>
+                                <div class="progresss">
+                                    <svg>
+                                        <circle cx="38" cy="38" r="36"></circle>
+                                    </svg>
+                                    <div class="percentage">
+                                        {% comment %} <p style="color: red; height:auto; width: auto; background-color: wheat; border: black solid 1px; border-radius: 10px 10px; padding: 2px 2px;">{{ faculty.num_departments }}</p> {% endcomment %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     {% endfor %}
+        
                 </div>
-            
-                <!-- Pagination -->
-                <div class="pagination">
-                    {% if ebooks.has_previous %}
-                        <a href="?page=1{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">&laquo; First</a>
-                        <a href="?page={{ ebooks.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">&lsaquo; Previous</a>
-                    {% endif %}
-            
-                    {% for num in ebooks.paginator.page_range %}
-                        {% if ebooks.number == num %}
-                            <span data-aos="fade-right" data-aos-delay="200" data-aos-duration="1000"><b>Page {{ num }}</b></span>
-                        {% else %}
-                            <a href="?page={{ num }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{ num }}</a>
-                        {% endif %}
-                    {% endfor %}
-            
-                    {% if ebooks.has_next %}
-                        <a href="?page={{ ebooks.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">Next &rsaquo;</a>
-                        <a href="?page={{ ebooks.paginator.num_pages }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">Last &raquo;</a>
-                    {% endif %}
-                </div>
-                <!-- End of Pagination -->
-            {% else %}
-                <p data-aos="fade-left" data-aos-delay="200" data-aos-duration="1000">No eBooks found.</p>
-            {% endif %}
-            
             </div>
-            <!-- End of New Users Section -->
-
-            <!-- Recent Orders Table -->
-
-            <!-- End of Recent Orders -->
 
         </main>
         <!-- End of Main Content -->
@@ -185,19 +138,6 @@
 
 
             </div>
-            <!-- End of Nav -->
-
-            <div class="user-profile">
-                <div class="logo" data-aos="fade-left" data-aos-delay="200" data-aos-duration="1000">
-                    <img src="{% static 'images/logo.png' %}">
-                    <h2>UniAbuja Flex</h2>
-                    <p>Hard Work pay</p>
-                </div>
-            </div>
-
-
-
-
         </div>
 
 
