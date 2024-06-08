@@ -82,20 +82,21 @@ UniAbujaFlex | library departments
             <div class="user-list">
                 <div class="analyse">
                     {% for course in courses %}
-                    <div class="sales" style="border: red solid 1px; background-image: url('{{ department.image.url }}'); background-size: cover; background-position: center center; width: 30vh; height: 15vh; display: flex; justify-content: center; align-items: center; position: relative;">
-                        <div class="status" style="text-align: center;">
+                    <div class="sales" style="border: red solid 1px; background-image: url('{{ department.image.url }}');background-size: cover; background-position: center center;"   onclick="window.location.href='{% url 'library:ebook_list' course_id=course.id %}'">
+                        <div class="status">
                             <div class="info">
-                                <h3>
-                                    <a href="{% url 'library:ebook_list' course_id=course.id %}">
-                                        <b style="color: black; height: 10px; width: auto; background-color: wheat; border: goldenrod solid 1px; border-radius: 50px; padding: 5px 10px; ">
-                                            {{ course.course_code }}
-                                        </b>
-                                    </a>
-                                </h3>
+                                <h3><a href="{% url 'library:ebook_list' course_id=course.id %}"><b style="color: black; height: 2px; width: auto; background-color: wheat; border: goldenrod solid 1px; border-radius: 50px; padding: 0px 3px; ">{{ course.course_code }}</b></a></h3>
+                            </div>
+                            <div class="progresss">
+                                <svg>
+                                    <circle cx="38" cy="38" r="36"></circle>
+                                </svg>
+                                <div class="percentage">
+                                    <p style="color: red; background-color: wheat; border: black solid 1px; border-radius: 10px; padding: 2px;">*</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    
+                    </div>                
                     {% endfor %}
 
                 </div>
