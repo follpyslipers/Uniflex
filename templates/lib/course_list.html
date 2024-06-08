@@ -15,6 +15,35 @@ UniAbujaFlex | library departments
 <meta name="twitter:title" content="UniAbujaFlex - Empowering Students with Academic Resources and Community">
 <meta name="twitter:description" content="UniAbujaFlex is your go-to e-library platform offering academic resources, including book handouts and past questions, along with a vibrant student community for collaboration and learning. Join us today!">    
 <meta name="twitter:image" content="/static/home/images/logo.png">
+<style>
+    .pagination-btn {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin: 0 10px;
+    }
+    
+    .pagination-btn:hover {
+        background-color: #0056b3;
+    }
+    
+    #paginationControls {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+    }
+    
+    #pageIndicator {
+        font-size: 16px;
+        margin: 0 10px;
+    }
+    
+</style>
 {% endblock moreheader %}
 
 {% block container %}
@@ -76,7 +105,7 @@ UniAbujaFlex | library departments
     <!-- Main content -->
     <main>
 
-        <h1>Department of {{department.name}} </h1>
+        <h1>Department of {{department.name}} - Courses </h1>
         <div class="new-users">
             <h2>Course List</h2>
             <div class="user-list">
@@ -98,6 +127,28 @@ UniAbujaFlex | library departments
                         </div>
                     </div>                
                     {% endfor %}
+                    <div class="visits" style="border-color: gold; border: 1px dashed red;
+                    ">
+                        <a href="">
+                            <div class="status">
+                                <div class="info" style="padding-left:2%;">
+                                    <img src="{% static 'images/plus.png' %}" alt="" >
+                                    <b><p style="top: 50%; color: red;">click Here To Add Course Code</p></b>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div id="paginationControls">
+                        {% if courses.has_previous %}
+                        <a href="?page={{ courses.previous_page_number }}" class="pagination-btn">Previous</a>
+                        {% endif %}
+                    
+                        <span id="pageIndicator">Page {{ courses.number }} of {{ courses.paginator.num_pages }}</span>
+                    
+                        {% if courses.has_next %}
+                        <a href="?page={{ courses.next_page_number }}" class="pagination-btn">Next</a>
+                        {% endif %}
+                    </div>
 
                 </div>
             </div>

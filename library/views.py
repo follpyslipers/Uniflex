@@ -47,9 +47,20 @@ def department_list(request, faculty_id):
 
     return render(request, 'lib/department_list.html', {'faculty': faculty, 'departments': departments})
 
+
 def course_list(request, department_id):
     department = get_object_or_404(Department, pk=department_id)
     courses = Course.objects.filter(department=department)
+    
+    paginator = Paginator(courses, 1)  # Change 6 to the number of courses you want per page
+    page = request.GET.get('page')
+    try:
+        courses = paginator.page(page)
+    except PageNotAnInteger:
+        courses = paginator.page(1)
+    except EmptyPage:
+        courses = paginator.page(paginator.num_pages)
+
     return render(request, 'lib/course_list.html', {'department': department, 'courses': courses})
 
 def ebook_list(request, course_id):
