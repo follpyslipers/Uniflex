@@ -3,8 +3,8 @@ self.addEventListener('install', event => {
         caches.open('v1').then(cache => {
             return cache.addAll([
                 '/',
-                '/static/home/images/logo.png',
-                '/static/home/images/logo.png',
+                '/https://uniabujaflex.s3.amazonaws.com/static/home/images/logo.png',
+                '/https://uniabujaflex.s3.amazonaws.com/static/home/images/logo.png',
                 // Add other assets you want to cache
             ]);
         })
