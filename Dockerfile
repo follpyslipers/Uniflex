@@ -1,15 +1,17 @@
-FROM python:2.7-slim
-
-ENV http_proxy http://proxy-chain.xxx.com:911/
-ENV https_proxy http://proxy-chain.xxx.com:912/
+FROM python:3.11
 
 WORKDIR /app
 
 COPY requirements.txt .
 
-RUN apt-get update && apt-get install -y libmysqlclient-dev
-RUN pip install --trusted-host pypi.python.org -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-CMD ["python"]
+RUN python manage.py collectstatic --no-input --clear
+RUN python manage.py makemigrations
+RUN python manage.py migrate
+
+EXPOSE 8000
+
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]

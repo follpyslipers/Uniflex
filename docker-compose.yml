@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - DJANGO_SETTINGS_MODULE=uniabujaflex.settings
+      - DATABASE_URL=postgresql://postgres:DaXPnvbRucpOAiZgGKRARzDxlXrbcaJt@roundhouse.proxy.rlwy.net:46354/railway
+
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=uniabujaflex
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+volumes:
+  db-data:
