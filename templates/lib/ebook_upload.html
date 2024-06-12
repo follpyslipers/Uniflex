@@ -1,21 +1,215 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload E-Book</title>
-</head>
-<body>
-    <h1>Upload E-Book</h1>
+{% extends 'lib/main.html' %}
+{% load static %}
+{% load static %}
+{% block title %}
+UniAbujaFlex | E_book 
+{% endblock title %}
 
-    <p><strong>Faculty:</strong> {{ faculty.name }}</p>
-    <p><strong>Department:</strong> {{ department.name }}</p>
-    <p><strong>Course:</strong> {{ course.title }} ({{ course.course_code }})</p>
+{% block moreheader %}
+<meta name="description" content="UniAbujaFlex is your go-to e-library platform offering academic resources, including book handouts and past questions, along with a vibrant student community for collaboration and learning. Join us today!">
+<meta name="keywords" content="UniAbujaFlex, UniAbuja, University of Abuja, e-library, academic resources, book handouts, past questions, student community, collaboration, learning">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="UniAbujaFlex - Empowering Students with Academic Resources and Community">
+<meta property="og:description" content="UniAbujaFlex is your go-to e-library platform offering academic resources, including book handouts and past questions, along with a vibrant student community for collaboration and learning. Join us today!">    
+<meta property="og:image" content="/https://uniabujaflex.s3.amazonaws.com/static/home/images/logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="UniAbujaFlex - Empowering Students with Academic Resources and Community">
+<meta name="twitter:description" content="UniAbujaFlex is your go-to e-library platform offering academic resources, including book handouts and past questions, along with a vibrant student community for collaboration and learning. Join us today!">    
+<meta name="twitter:image" content="/https://uniabujaflex.s3.amazonaws.com/static/home/images/logo.png">
+<link rel="canonical" href="https://www.yourwebsite.com/your-page-url">
+<style>
+    /* Form container */
+.analyse {
+    background-color: transparent;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
 
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Upload</button>
-    </form>
-</body>
-</html>
+  }
+  
+  /* Form title */
+  .analyse h1 {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  /* Form fields */
+  .analyse p {
+    margin-bottom: 20px;
+  }
+  
+  .analyse strong {
+    font-weight: bold;
+    color: #666;
+  }
+  
+  .analyse form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  /* Form input fields */
+  .analyse input,.analyse textarea,.analyse select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .analyse input:focus,.analyse textarea:focus,.analyse select:focus {
+    border-color: #aaa;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Form submit button */
+  .analyse button[type="submit"] {
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .analyse button[type="submit"]:hover {
+    background-color: #3e8e41;
+  }
+  
+  /* Form error messages */
+  .analyse.error {
+    color: #red;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  
+  /* Animations */
+  .analyse {
+    animation: fadeIn 0.5s;
+  }
+  
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  
+  .analyse button[type="submit"] {
+    animation: pulse 2s infinite;
+  }
+  
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+</style>
+
+{% endblock moreheader %}
+{% block container %}
+<div class="container">
+    <aside>
+        <div class="toggle">
+            <div class="logo">
+                <img src="{% static 'home/images/logo.png' %}">
+                <h2>UniAbuja<span class="danger">Flex</span></h2>
+            </div>
+            <div class="close" id="close-btn">
+                <span class="material-icons-sharp">
+                    close
+                </span>
+            </div>
+        </div>
+
+        <div class="sidebar" >
+            <a href="https://portal.uniabuja.edu.ng/index.php">
+                <span class="material-icons-sharp">
+                    apps
+                </span>
+                <h3>School Portal</h3>
+            </a>
+            <a href="{% url 'library:faculty_list' %}"  >
+                <span class="material-icons-sharp">
+                book
+                </span>
+                <h3>Book</h3>
+            </a>
+            <a href="{% url 'location:location_list' %}" class="active">      
+                <span class="material-icons-sharp">
+                    map
+                </span>
+                <h3>Map</h3>
+            </a>
+            
+            {% if user.is_authenticated %}
+                <a href="{% url 'user:sign-out' %}">
+                    <span class="material-icons-sharp">
+                        logout
+                    </span>
+                    <h3>Logout</h3>
+                </a>
+            <!-- Display login link if user is not authenticated -->
+            {% else %}
+                <a href="{% url 'user:sign-in' %}">
+                    <span class="material-icons-sharp">
+                        login
+                    </span>
+                    <h3>Login</h3>
+                </a>
+            {% endif %}
+        </div>
+    </aside>
+
+    <!-- Main content -->
+    <main>
+
+        <div class="new-users">
+            <div class="user-list">
+                <div class="analyse">
+                    <h1>Upload E-Book</h1>
+
+                    <p><strong>Faculty:</strong> {{ faculty.name }}</p>
+                    <p><strong>Department:</strong> {{ department.name }}</p>
+                    <p><strong>Course:</strong> {{ course.title }} ({{ course.course_code }})</p>
+                
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit">Upload</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+       
+
+    <div class="right-section">
+        <div class="nav">
+            <button id="menu-btn">
+                <span class="material-icons-sharp">menu</span>
+            </button>
+            <div class="dark-mode">
+                <span class="material-icons-sharp active">light_mode</span>
+                <span class="material-icons-sharp">dark_mode</span>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Existing right section -->
+</div>
+
+
+{% endblock container %}

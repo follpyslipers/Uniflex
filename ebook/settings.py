@@ -184,35 +184,27 @@ USE_I18N = True
 USE_TZ = True
 
 
-AWS_ACCESS_KEY_ID = "AKIA5DILOY5YYEAUKIN3"
 
-AWS_SECRET_ACCESS_KEY = "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"
+# OSS settings
+OSS_ACCESS_KEY_ID = 'LTAI5tCub24r8bcgejLVfLZf'
+OSS_ACCESS_KEY_SECRET = 'UZDCPmE9PL7JIFg2q148T6agZitSdB'
+OSS_BUCKET_NAME = 'uniabujaflexUnmodifiable'
+OSS_ENDPOINT = 'oss-us-west-1.aliyuncs.com'  # or your region's endpoint
 
-AWS_STORAGE_BUCKET_NAME = "uniabujaflex"
+# Django storages settings
+DEFAULT_FILE_STORAGE = 'storages.backends.ossboto3.OSSBoto3Storage'
+AWS_S3_REGION_NAME = 'oss-cn-hangzhou'  # or your region
+AWS_S3_ENDPOINT_URL = 'https://' + OSS_ENDPOINT
 
-AWS_S3_FILE_OVERWRITE = False
-
-AWS_DEFAULT_ACL = None
-
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
-AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
-
-AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
-
-AWS_LOCATION = 'static'
-
-STATIC_LOCATION = 'static'
-
-STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{STATIC_LOCATION}/'
-
+# Media and static files settings
+MEDIA_URL = 'https://' + OSS_BUCKET_NAME + '.' + OSS_ENDPOINT + '/'
+MEDIA_ROOT = ''
+STATIC_URL = 'https://' + OSS_BUCKET_NAME + '.' + OSS_ENDPOINT + '/'
+STATIC_ROOT = ''
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
 
 
 

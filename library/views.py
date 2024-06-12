@@ -92,7 +92,7 @@ def ebook_upload(request, course_id=None):
             if course:
                 ebook.course = course
                 ebook.save()
-                return redirect('library:ebook_list', course_id=course.id)
+                return redirect('core:feedback_thanks')
             else:
                 return render(request, 'lib/ebook_upload.html', {
                     'form': form,
