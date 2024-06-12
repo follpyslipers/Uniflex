@@ -193,7 +193,7 @@ OSS_ENDPOINT = 'oss-us-west-1.aliyuncs.com'  # or your region's endpoint
 
 # Django storages settings
 DEFAULT_FILE_STORAGE = 'storages.backends.ossboto3.OSSBoto3Storage'
-AWS_S3_REGION_NAME = 'oss-cn-hangzhou'  # or your region
+AWS_S3_REGION_NAME = 'oss-us-west-1.aliyuncs.com'  # or your region
 AWS_S3_ENDPOINT_URL = 'https://' + OSS_ENDPOINT
 
 # Media and static files settings

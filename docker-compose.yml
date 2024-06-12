@@ -8,7 +8,7 @@ services:
     depends_on:
       - db
     environment:
-      - DJANGO_SETTINGS_MODULE=uniabujaflex.settings
+      - DJANGO_SETTINGS_MODULE=ebook.settings
       - DATABASE_URL=postgresql://postgres:DaXPnvbRucpOAiZgGKRARzDxlXrbcaJt@roundhouse.proxy.rlwy.net:46354/railway
 
   db:
@@ -16,7 +16,7 @@ services:
     environment:
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=password
-      - POSTGRES_DB=uniabujaflex
+      - POSTGRES_DB=ebook
     volumes:
       - db-data:/var/lib/postgresql/data
 
