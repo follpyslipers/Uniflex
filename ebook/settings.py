@@ -12,49 +12,45 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
-from decouple import config
 import environ
 import dj_database_url
+
+# Initialize environment variables
+env = environ.Env(
+    DEBUG=(bool, False)
+)
+
+# Reading .env file
+environ.Env.read_env(os.path.join(Path(__file__).resolve().parent.parent, '.env'))
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
-
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = 'django-insecure-lbdqe-r26a87u!is#s#%aa-+e+tt4$kwdqs@!&om0^4-fyjd)j'
+SECRET_KEY = env('SECRET_KEY')
 
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = [
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=[
     'uniflex.onrender.com',
     'www.uniabujaflex.com.ng',
-    'uniabujaflex.com.ng',  # Add this line
+    'uniabujaflex.com.ng',
     'localhost',
-    '127.0.0.1',  # Loopback address for local development
-    '0.0.0.0',    # Optional: Allow binding to all interfaces for local development
+    '127.0.0.1',
+    '0.0.0.0',
     'uniflex-production.up.railway.app',
     'registry.npmjs.org'
-]
+])
 
-
-
-
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-# Other settings...
-
-
-# Other settings...
-
+# Security settings
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECURE_SSL_REDIRECT = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
 # Application definition
-
 INSTALLED_APPS = [
     'jazzmin',
     'django.contrib.admin',
@@ -64,14 +60,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sitemaps',
-    # 'django_seo_js',
     'library',
     'core',
     'location',
-    'user', 
+    'user',
     'site_analsys',
-    # 'seo'
-    
 ]
 
 MIDDLEWARE = [
@@ -83,11 +76,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    #more middelware
-    'django.middleware.security.SecurityMiddleware',
     'site_analsys.middleware.VisitorTrackingMiddleware',
-    
-    
 ]
 
 ROOT_URLCONF = 'ebook.urls'
@@ -108,7 +97,14 @@ TEMPLATES = [
     },
 ]
 
+WSGI_APPLICATION = 'ebook.wsgi.application'
 
+# Database
+DATABASES = {
+    'default': dj_database_url.config(conn_max_age=600)
+}
+
+# Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
@@ -116,238 +112,51 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-WSGI_APPLICATION = 'ebook.wsgi.application'
+# Django storages settings
+DEFAULT_FILE_STORAGE = 'storages.backends.ossboto3.OSSBoto3Storage'
+AWS_S3_REGION_NAME = 'oss-us-west-1.aliyuncs.com'
+AWS_S3_ENDPOINT_URL = 'https://' + env('OSS_ENDPOINT')
 
-
-# Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME':  'db.sqlite3',
-#     }
-# }
-
-
-
-
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'uniabujaflex',
-#         'USER': 'Follpysliper',
-#         'PASSWORD': 'mypassword',
-#         'HOST': 'uniabujaflex.cpgu0ygiudke.eu-north-1.rds.amazonaws.com',
-#         'PORT': '5432',
-#     }
-# }
-
+# Media and static files settings
+MEDIA_URL = 'https://' + env('OSS_BUCKET_NAME') + '.' + env('OSS_ENDPOINT') + '/'
+STATIC_URL = 'https://' + env('OSS_BUCKET_NAME') + '.' + env('OSS_ENDPOINT') + '/'
 
 # Password validation
-# https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
-
-# CSRF_FAILURE_VIEW = 'your_app.views.csrf_failure'
-
 
 CSRF_TRUSTED_ORIGINS = [
     'https://www.uniabujaflex.com.ng',
     'https://uniabujaflex.com.ng',
     'https://uniflex.onrender.com',
     'https://uniflex-production.up.railway.app',
-    # Add other trusted origins with schemes
 ]
 
-# Internationalization
-# https://docs.djangoproject.com/en/5.0/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'Africa/Lagos'
-
-
 USE_I18N = True
-
 USE_TZ = True
 
-
-
-# OSS settings
-OSS_ACCESS_KEY_ID = 'LTAI5tCub24r8bcgejLVfLZf'
-OSS_ACCESS_KEY_SECRET = 'UZDCPmE9PL7JIFg2q148T6agZitSdB'
-OSS_BUCKET_NAME = 'uniabujaflexUnmodifiable'
-OSS_ENDPOINT = 'oss-us-west-1.aliyuncs.com'  # or your region's endpoint
-
-# Django storages settings
-DEFAULT_FILE_STORAGE = 'storages.backends.ossboto3.OSSBoto3Storage'
-AWS_S3_REGION_NAME = 'oss-us-west-1.aliyuncs.com'  # or your region
-AWS_S3_ENDPOINT_URL = 'https://' + OSS_ENDPOINT
-
-# Media and static files settings
-MEDIA_URL = 'https://' + OSS_BUCKET_NAME + '.' + OSS_ENDPOINT + '/'
-MEDIA_ROOT = ''
-STATIC_URL = 'https://' + OSS_BUCKET_NAME + '.' + OSS_ENDPOINT + '/'
-STATIC_ROOT = ''
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.0/howto/static-files/
-
-
-
-
-
-
-LOGIN_URL = "user:sign-in"
-
-LOGOUT_REDIRECT_URL = "user:sign-in"
-
-AUTH_USER_MODEL = 'user.User'
-
 # Default primary key field type
-# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
 JAZZMIN_SETTINGS = {
-    # "site_title": "MovieX",
     "site_header": "UniabujaFlex",
     "site_brand": "learning Made Easy...",
-    # "site_logo": "images/logo.jpg",
-    "copyright": "UniabujaFlex - All RIght Reserverd © Copyright 2023",
-    # "order_with_respect_to": ["core", 'userauths', "transactions" , 'addon', 'blog']
-
-    
+    "copyright": "UniabujaFlex - All Rights Reserved © Copyright 2023",
 }
 
 JAZZMIN_UI_TWEAKS = {
-    "navbar_small_text": False,
-    "footer_small_text": False,
-    "body_small_text": True,
-    "brand_small_text": False,
-    "brand_colour": "navbar-indigo",
-    "accent": "accent-olive",
     "navbar": "navbar-indigo navbar-dark",
-    "no_navbar_border": False,
-    "navbar_fixed": False,
-    "layout_boxed": False,
-    "footer_fixed": False,
-    "sidebar_fixed": False,
     "sidebar": "sidebar-dark-indigo",
-    "sidebar_nav_small_text": False,
-    "sidebar_disable_expand": False,
-    "sidebar_nav_child_indent": False,
-    "sidebar_nav_compact_style": False,
-    "sidebar_nav_legacy_style": False,
-    "sidebar_nav_flat_style": False,
     "theme": "cyborg",
     "dark_mode_theme": "cyborg",
-    "button_classes": {
-        "primary": "btn-primary",
-        "secondary": "btn-secondary",
-        "info": "btn-info",
-        "warning": "btn-warning",
-        "danger": "btn-danger",
-        "success": "btn-success"
-    },
-    # New tweaks added below
-    "sidebar_nav_icons": True,
-    "sidebar_nav_flat": False,
-    "sidebar_nav_legacy": False,
-    "sidebar_nav_child_arrows": True,
-    "sidebar_nav_labels": False,
-    "sidebar_nav_indicators": True,
-    "sidebar_nav_hover_expand": False,
-    "sidebar_nav_light": False,
-    "sidebar_nav_flat_hover": False,
-    "sidebar_nav_legacy_hover": False,
-    "sidebar_nav_child_indent_hover": False,
-    "sidebar_nav_compact": False,
-    "sidebar_nav_legacy_active": False,
-    "sidebar_nav_legacy_fixed": False,
-    "sidebar_nav_child_indent_active": False,
-    "sidebar_nav_compact_hover": False,
-    "sidebar_nav_legacy_hover_expand": False,
-    "sidebar_nav_child_indent_hover_expand": False,
-    "sidebar_nav_compact_hover_expand": False,
-    "sidebar_nav_labels_hover_expand": False,
-    "sidebar_nav_indicators_hover_expand": False,
-    "sidebar_nav_active_bold": False,
-    "sidebar_nav_active_italic": False,
-    "sidebar_nav_active_light": False,
-    "sidebar_nav_active_underline": False,
-    "sidebar_nav_active_uppercase": False,
-    "sidebar_nav_active_small_caps": False,
-    "sidebar_nav_active_strikethrough": False,
-    "sidebar_nav_active_text_sm": False,
-    "sidebar_nav_active_text_xs": False,
-    "sidebar_nav_active_text_xxs": False,
-    "sidebar_nav_hover_bold": False,
-    "sidebar_nav_hover_italic": False,
-    "sidebar_nav_hover_light": False,
-    "sidebar_nav_hover_underline": False,
-    "sidebar_nav_hover_uppercase": False,
-    "sidebar_nav_hover_small_caps": False,
-    "sidebar_nav_hover_strikethrough": False,
-    "sidebar_nav_hover_text_sm": False,
-    "sidebar_nav_hover_text_xs": False,
-    "sidebar_nav_hover_text_xxs": False,
-    
-        # New icon-related tweaks added below
-    "sidebar_nav_icons": True,  # Enable sidebar navigation icons
-    "sidebar_nav_icon_size": "sm",  # Set sidebar navigation icon size to small
-    "sidebar_nav_icon_spacing": True,  # Add spacing between sidebar navigation icons and text
-    "sidebar_nav_icon_color": "text-dark",  # Set sidebar navigation icon color to dark text color
-    "sidebar_nav_icon_active_color": "text-primary",  # Set active sidebar navigation icon color to primary color
-
-    # Additional icon tweaks for specific navigation items
-    "sidebar_nav_icons_custom": {
-        "dashboard": "fas fa-tachometer-alt",  # Custom icon for the dashboard navigation item
-        "profile": "fas fa-user",  # Custom icon for the profile navigation item
-        "settings": "fas fa-cog"
-    }
 }
 
-
-
-# Initialize environment variables
-env = environ.Env(
-    # Set default values and casting
-    DEBUG=(bool, False)
-)
-
-# Reading .env file
-environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DEBUG')
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('SECRET_KEY')
-
-# Allowed hosts
-# ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost', '127.0.0.1'])
-
-# Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-DATABASES = {
-    'default': env.db(),
-}
-
-# Example static and media settings (optional)
+LOGIN_URL = "user:sign-in"
+LOGOUT_REDIRECT_URL = "user:sign-in"
+AUTH_USER_MODEL = 'user.User'

@@ -13,8 +13,11 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the rest of the application code
 COPY . .
 
+# Collect static files
+RUN python manage.py collectstatic --noinput
+
 # Expose the port the app runs on
-EXPOSE ${PORT:-8000}
+EXPOSE 8000
 
 # Copy and run the entrypoint script
 COPY entrypoint.sh /app/entrypoint.sh
