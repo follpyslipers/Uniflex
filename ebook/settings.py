@@ -102,8 +102,8 @@ AWS_S3_REGION_NAME = 'oss-us-west-1.aliyuncs.com'
 AWS_S3_ENDPOINT_URL = 'https://' + OSS_ENDPOINT
 
 # Use different paths for static and media files
-AWS_STORAGE_BUCKET_NAME_STATIC = 'uniabujaflex-static'
-AWS_STORAGE_BUCKET_NAME_MEDIA = 'uniabujaflex-media'
+AWS_STORAGE_BUCKET_NAME_STATIC = 'uniabujaflexUnmodifiable'
+AWS_STORAGE_BUCKET_NAME_MEDIA = 'uniabujaflexUnmodifiable'
 
 STATIC_URL = 'https://' + AWS_STORAGE_BUCKET_NAME_STATIC + '.' + OSS_ENDPOINT + '/'
 MEDIA_URL = 'https://' + AWS_STORAGE_BUCKET_NAME_MEDIA + '.' + OSS_ENDPOINT + '/'
