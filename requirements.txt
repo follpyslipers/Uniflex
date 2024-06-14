@@ -48,3 +48,4 @@ cryptography==42.0.8
 aliyun-python-sdk-core==2.15.1
 aliyun-python-sdk-kms==2.16.3
 oss2==2.18.5
+python-dotenv==1.0.1
