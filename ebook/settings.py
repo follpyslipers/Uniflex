@@ -81,11 +81,11 @@ TEMPLATES = [
         },
     },
 ]
-STATIC_URL = 'https://uniabujaflex.oss-us-west-1.aliyuncs.com/static/'
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-MEDIA_URL = 'https://uniabujaflex.oss-us-west-1.aliyuncs.com/media/'
+MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # OSS settings
