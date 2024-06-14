@@ -171,3 +171,5 @@ JAZZMIN_UI_TWEAKS = {
     "theme": "cyborg",
     "dark_mode_theme": "cyborg",
 }
+
+WSGI_APPLICATION = 'ebook.wsgi.application'
