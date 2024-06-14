@@ -30,7 +30,8 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
     '0.0.0.0',
     'uniflex-production.up.railway.app',
-    'registry.npmjs.org'
+    'registry.npmjs.org',
+    'uniflex-production-f9ea.up.railway.app'
 ]
 
 # Application definition
