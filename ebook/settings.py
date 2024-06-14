@@ -5,7 +5,7 @@ import environ
 
 # Initialize environment variables
 env = environ.Env(
-    DEBUG=(bool, False)
+    DEBUG=(bool, True)
 )
 
 BASE_DIR = Path(__file__).resolve().parent.parent
