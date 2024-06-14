@@ -1,24 +1,22 @@
 import os
 from pathlib import Path
-from dotenv import load_dotenv
 import environ
+from dotenv import load_dotenv
 
 # Initialize environment variables
 env = environ.Env(
     DEBUG=(bool, True)
 )
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-# BASE_DIR = Path(__file__).resolve().parent.parent
-# Reading .env file
-environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # Base directory
+BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-load_dotenv(os.path.join(BASE_DIR, '.env'))
+# Load environment variables from .env file
+environ.Env.read_env(BASE_DIR / '.env')
+load_dotenv(BASE_DIR / '.env')
 
 # Security settings
-DEBUG = env('DEBUG')
+DEBUG = env.bool('DEBUG')
 SECRET_KEY = env('SECRET_KEY')
 
 # Allowed hosts
@@ -60,7 +58,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.security.SecurityMiddleware',
     'site_analsys.middleware.VisitorTrackingMiddleware',
 ]
 
@@ -69,7 +66,7 @@ ROOT_URLCONF = 'ebook.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -81,48 +78,39 @@ TEMPLATES = [
         },
     },
 ]
-import os
-
-# Base directory of your Django project
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Static and Media URL/Root configurations
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [BASE_DIR / 'static']
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = BASE_DIR / 'media'
 
-# OSS settings
-OSS_ACCESS_KEY_ID = 'LTAI5tCub24r8bcgejLVfLZf'
-OSS_ACCESS_KEY_SECRET = 'UZDCPmE9PL7JIFg2q148T6agZitSdB'
-OSS_BUCKET_NAME = 'uniabujaflex'
-OSS_ENDPOINT = 'oss-us-west-1.aliyuncs.com'
+# Aliyun OSS settings
+OSS_ACCESS_KEY_ID = env('OSS_ACCESS_KEY_ID')
+OSS_ACCESS_KEY_SECRET = env('OSS_ACCESS_KEY_SECRET')
+OSS_BUCKET_NAME = env('OSS_BUCKET_NAME')
+OSS_ENDPOINT = env('OSS_ENDPOINT')
 
 # Django storages settings for boto3
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-# Aliyun OSS configurations
-AWS_S3_REGION_NAME = 'us-west-1'  # Ensure this matches the endpoint region
-AWS_S3_ENDPOINT_URL = 'https://' + OSS_ENDPOINT
+AWS_S3_REGION_NAME = 'us-west-1'
+AWS_S3_ENDPOINT_URL = f'https://{OSS_ENDPOINT}'
 AWS_ACCESS_KEY_ID = OSS_ACCESS_KEY_ID
 AWS_SECRET_ACCESS_KEY = OSS_ACCESS_KEY_SECRET
-
-# Bucket names for static and media files
 AWS_STORAGE_BUCKET_NAME = OSS_BUCKET_NAME
 
-# Use different paths for static and media files if necessary
-STATIC_URL = 'https://' + OSS_BUCKET_NAME + '.' + OSS_ENDPOINT + '/static/'
-MEDIA_URL = 'https://' + OSS_BUCKET_NAME + '.' + OSS_ENDPOINT + '/media/'
-
-# Ensure the following settings are correctly configured
-AWS_S3_CUSTOM_DOMAIN = OSS_BUCKET_NAME + '.' + OSS_ENDPOINT
-
+# Corrected Static and Media URLs
+STATIC_URL = f'https://{OSS_BUCKET_NAME}.{OSS_ENDPOINT}/static/'
+MEDIA_URL = f'https://{OSS_BUCKET_NAME}.{OSS_ENDPOINT}/media/'
+AWS_S3_CUSTOM_DOMAIN = f'{OSS_BUCKET_NAME}.{OSS_ENDPOINT}'
 
 # Security settings
-# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https','http')
+# Uncomment these if you are using SSL
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # SECURE_SSL_REDIRECT = True
 # SESSION_COOKIE_SECURE = True
 # CSRF_COOKIE_SECURE = True
@@ -134,34 +122,23 @@ CSRF_TRUSTED_ORIGINS = [
     'https://uniflex-production.up.railway.app',
 ]
 
-DEBUG = os.getenv('DEBUG') == 'True'
-SECRET_KEY = os.getenv('SECRET_KEY')
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DATABASE_NAME'),
-        'USER': os.getenv('DATABASE_USER'),
-        'PASSWORD': os.getenv('DATABASE_PASSWORD'),
-        'HOST': os.getenv('DATABASE_HOST'),
-        'PORT': os.getenv('DATABASE_PORT'),
+        'NAME': env('DATABASE_NAME'),
+        'USER': env('DATABASE_USER'),
+        'PASSWORD': env('DATABASE_PASSWORD'),
+        'HOST': env('DATABASE_HOST'),
+        'PORT': env('DATABASE_PORT'),
     }
 }
 
-
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
 LANGUAGE_CODE = 'en-us'
@@ -177,8 +154,8 @@ AUTH_USER_MODEL = 'user.User'
 
 JAZZMIN_SETTINGS = {
     "site_header": "UniabujaFlex",
-    "site_brand": "learning Made Easy...",
-    "copyright": "UniabujaFlex - All RIght Reserverd © Copyright 2023",
+    "site_brand": "Learning Made Easy...",
+    "copyright": "UniabujaFlex - All Rights Reserved © 2023",
 }
 
 JAZZMIN_UI_TWEAKS = {
