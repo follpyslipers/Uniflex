@@ -7,8 +7,8 @@ import environ
 env = environ.Env(
     DEBUG=(bool, True)
 )
-
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# BASE_DIR = Path(__file__).resolve().parent.parent
 # Reading .env file
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
@@ -81,38 +81,37 @@ TEMPLATES = [
         },
     },
 ]
-
-# Static and Media files settings
-STATIC_URL = '/static/'
+STATIC_URL = 'https://uniabujaflex.oss-us-west-1.aliyuncs.com/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-MEDIA_URL = '/media/'
+MEDIA_URL = 'https://uniabujaflex.oss-us-west-1.aliyuncs.com/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # OSS settings
 OSS_ACCESS_KEY_ID = 'LTAI5tCub24r8bcgejLVfLZf'
 OSS_ACCESS_KEY_SECRET = 'UZDCPmE9PL7JIFg2q148T6agZitSdB'
-OSS_BUCKET_NAME = 'uniabujaflexUnmodifiable'
+OSS_BUCKET_NAME = 'uniabujaflex'
 OSS_ENDPOINT = 'oss-us-west-1.aliyuncs.com'
 
 # Django storages settings
-DEFAULT_FILE_STORAGE = 'storages.backends.ossboto3.OSSBoto3Storage'
-AWS_S3_REGION_NAME = 'oss-us-west-1.aliyuncs.com'
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+AWS_S3_REGION_NAME = 'oss-us-west-1'
 AWS_S3_ENDPOINT_URL = 'https://' + OSS_ENDPOINT
 
 # Use different paths for static and media files
-AWS_STORAGE_BUCKET_NAME_STATIC = 'uniabujaflexUnmodifiable'
-AWS_STORAGE_BUCKET_NAME_MEDIA = 'uniabujaflexUnmodifiable'
+AWS_STORAGE_BUCKET_NAME_STATIC = 'uniabujaflex'
+AWS_STORAGE_BUCKET_NAME_MEDIA = 'uniabujaflex'
 
-STATIC_URL = 'https://' + AWS_STORAGE_BUCKET_NAME_STATIC + '.' + OSS_ENDPOINT + '/'
-MEDIA_URL = 'https://' + AWS_STORAGE_BUCKET_NAME_MEDIA + '.' + OSS_ENDPOINT + '/'
+STATIC_URL = 'https://' + AWS_STORAGE_BUCKET_NAME_STATIC + '.' + OSS_ENDPOINT + '/static/'
+MEDIA_URL = 'https://' + AWS_STORAGE_BUCKET_NAME_MEDIA + '.' + OSS_ENDPOINT + '/media/'
 
 # Security settings
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https','http')
+# SECURE_SSL_REDIRECT = True
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
 
 CSRF_TRUSTED_ORIGINS = [
     'https://www.uniabujaflex.com.ng',
