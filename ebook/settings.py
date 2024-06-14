@@ -81,6 +81,12 @@ TEMPLATES = [
         },
     },
 ]
+import os
+
+# Base directory of your Django project
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Static and Media URL/Root configurations
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
@@ -94,18 +100,26 @@ OSS_ACCESS_KEY_SECRET = 'UZDCPmE9PL7JIFg2q148T6agZitSdB'
 OSS_BUCKET_NAME = 'uniabujaflex'
 OSS_ENDPOINT = 'oss-us-west-1.aliyuncs.com'
 
-# Django storages settings
+# Django storages settings for boto3
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-AWS_S3_REGION_NAME = 'oss-us-west-1'
+
+# Aliyun OSS configurations
+AWS_S3_REGION_NAME = 'us-west-1'  # Ensure this matches the endpoint region
 AWS_S3_ENDPOINT_URL = 'https://' + OSS_ENDPOINT
+AWS_ACCESS_KEY_ID = OSS_ACCESS_KEY_ID
+AWS_SECRET_ACCESS_KEY = OSS_ACCESS_KEY_SECRET
 
-# Use different paths for static and media files
-AWS_STORAGE_BUCKET_NAME_STATIC = 'uniabujaflex'
-AWS_STORAGE_BUCKET_NAME_MEDIA = 'uniabujaflex'
+# Bucket names for static and media files
+AWS_STORAGE_BUCKET_NAME = OSS_BUCKET_NAME
 
-STATIC_URL = 'https://' + AWS_STORAGE_BUCKET_NAME_STATIC + '.' + OSS_ENDPOINT + '/static/'
-MEDIA_URL = 'https://' + AWS_STORAGE_BUCKET_NAME_MEDIA + '.' + OSS_ENDPOINT + '/media/'
+# Use different paths for static and media files if necessary
+STATIC_URL = 'https://' + OSS_BUCKET_NAME + '.' + OSS_ENDPOINT + '/static/'
+MEDIA_URL = 'https://' + OSS_BUCKET_NAME + '.' + OSS_ENDPOINT + '/media/'
+
+# Ensure the following settings are correctly configured
+AWS_S3_CUSTOM_DOMAIN = OSS_BUCKET_NAME + '.' + OSS_ENDPOINT
+
 
 # Security settings
 # SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https','http')
