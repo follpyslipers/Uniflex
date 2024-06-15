@@ -23,7 +23,7 @@ def RegisterView(request):
             messages.success(request, f"Hey {matric_number}, your account was created successfully.")
             user = authenticate(matric_number=form.cleaned_data['matric_number'], password=form.cleaned_data['password1'])
             login(request, user)
-            return redirect("E_libary:ebook_list")
+            return redirect("library:faculty_list")
         else:
             # If the form is not valid, display the errors
             for field, errors in form.errors.items():
@@ -56,10 +56,10 @@ def LoginView(request):
                 login(request, user)
                 if user.is_class_rep:
                     messages.success(request, "You are logged in as a class representative.")
-                    return redirect("E_libary:ebook_list")
+                    return redirect("library:faculty_list")
                 else:
                     messages.success(request, "You are logged in.")
-                    return redirect("E_libary:ebook_list")
+                    return redirect("library:faculty_list")
             else:
                 messages.warning(request, "Username or password does not exist")
                 return redirect("user:sign-in")
@@ -68,7 +68,7 @@ def LoginView(request):
 
     if request.user.is_authenticated:
         messages.warning(request, "You are already logged in")
-        return redirect("E_libary:ebook_list")
+        return redirect("library:faculty_list")
         
     return render(request, "Auth/sign-in.html")
 

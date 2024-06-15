@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'location',
     'user',
     'site_analsys',
+    'sslserver',
 ]
 
 MIDDLEWARE = [
@@ -108,18 +109,24 @@ STATIC_URL = f'https://{OSS_BUCKET_NAME}.{OSS_ENDPOINT}/static/'
 MEDIA_URL = f'https://{OSS_BUCKET_NAME}.{OSS_ENDPOINT}/media/'
 AWS_S3_CUSTOM_DOMAIN = f'{OSS_BUCKET_NAME}.{OSS_ENDPOINT}'
 
-# Security settings
+# # Security settings
 # Uncomment these if you are using SSL
-# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-# SECURE_SSL_REDIRECT = True
-# SESSION_COOKIE_SECURE = True
-# CSRF_COOKIE_SECURE = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = False
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = False
+
 
 CSRF_TRUSTED_ORIGINS = [
+    'https://uniflex.onrender.com',
     'https://www.uniabujaflex.com.ng',
     'https://uniabujaflex.com.ng',
-    'https://uniflex.onrender.com',
+    'https://localhost',
+    'https://127.0.0.1',
+    'https://0.0.0.0',
     'https://uniflex-production.up.railway.app',
+    'https://registry.npmjs.org',
+    'https://uniflex-production-f9ea.up.railway.app'
 ]
 
 DATABASES = {
@@ -159,8 +166,91 @@ JAZZMIN_SETTINGS = {
 }
 
 JAZZMIN_UI_TWEAKS = {
+    "navbar_small_text": False,
+    "footer_small_text": False,
+    "body_small_text": True,
+    "brand_small_text": False,
+    "brand_colour": "navbar-indigo",
+    "accent": "accent-olive",
+    "navbar": "navbar-indigo navbar-dark",
+    "no_navbar_border": False,
+    "navbar_fixed": False,
+    "layout_boxed": False,
+    "footer_fixed": False,
+    "sidebar_fixed": False,
+    "sidebar": "sidebar-dark-indigo",
+    "sidebar_nav_small_text": False,
+    "sidebar_disable_expand": False,
+    "sidebar_nav_child_indent": False,
+    "sidebar_nav_compact_style": False,
+    "sidebar_nav_legacy_style": False,
+    "sidebar_nav_flat_style": False,
     "theme": "cyborg",
     "dark_mode_theme": "cyborg",
+    "button_classes": {
+        "primary": "btn-primary",
+        "secondary": "btn-secondary",
+        "info": "btn-info",
+        "warning": "btn-warning",
+        "danger": "btn-danger",
+        "success": "btn-success"
+    },
+    # New tweaks added below
+    "sidebar_nav_icons": True,
+    "sidebar_nav_flat": False,
+    "sidebar_nav_legacy": False,
+    "sidebar_nav_child_arrows": True,
+    "sidebar_nav_labels": False,
+    "sidebar_nav_indicators": True,
+    "sidebar_nav_hover_expand": False,
+    "sidebar_nav_light": False,
+    "sidebar_nav_flat_hover": False,
+    "sidebar_nav_legacy_hover": False,
+    "sidebar_nav_child_indent_hover": False,
+    "sidebar_nav_compact": False,
+    "sidebar_nav_legacy_active": False,
+    "sidebar_nav_legacy_fixed": False,
+    "sidebar_nav_child_indent_active": False,
+    "sidebar_nav_compact_hover": False,
+    "sidebar_nav_legacy_hover_expand": False,
+    "sidebar_nav_child_indent_hover_expand": False,
+    "sidebar_nav_compact_hover_expand": False,
+    "sidebar_nav_labels_hover_expand": False,
+    "sidebar_nav_indicators_hover_expand": False,
+    "sidebar_nav_active_bold": False,
+    "sidebar_nav_active_italic": False,
+    "sidebar_nav_active_light": False,
+    "sidebar_nav_active_underline": False,
+    "sidebar_nav_active_uppercase": False,
+    "sidebar_nav_active_small_caps": False,
+    "sidebar_nav_active_strikethrough": False,
+    "sidebar_nav_active_text_sm": False,
+    "sidebar_nav_active_text_xs": False,
+    "sidebar_nav_active_text_xxs": False,
+    "sidebar_nav_hover_bold": False,
+    "sidebar_nav_hover_italic": False,
+    "sidebar_nav_hover_light": False,
+    "sidebar_nav_hover_underline": False,
+    "sidebar_nav_hover_uppercase": False,
+    "sidebar_nav_hover_small_caps": False,
+    "sidebar_nav_hover_strikethrough": False,
+    "sidebar_nav_hover_text_sm": False,
+    "sidebar_nav_hover_text_xs": False,
+    "sidebar_nav_hover_text_xxs": False,
+    
+        # New icon-related tweaks added below
+    "sidebar_nav_icons": True,  # Enable sidebar navigation icons
+    "sidebar_nav_icon_size": "sm",  # Set sidebar navigation icon size to small
+    "sidebar_nav_icon_spacing": True,  # Add spacing between sidebar navigation icons and text
+    "sidebar_nav_icon_color": "text-dark",  # Set sidebar navigation icon color to dark text color
+    "sidebar_nav_icon_active_color": "text-primary",  # Set active sidebar navigation icon color to primary color
+
+    # Additional icon tweaks for specific navigation items
+    "sidebar_nav_icons_custom": {
+        "dashboard": "fas fa-tachometer-alt",  # Custom icon for the dashboard navigation item
+        "profile": "fas fa-user",  # Custom icon for the profile navigation item
+        "settings": "fas fa-cog"
+    }
 }
 
 WSGI_APPLICATION = 'ebook.wsgi.application'

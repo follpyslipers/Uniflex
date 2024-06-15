@@ -68,10 +68,12 @@ def ebook_list(request, course_id):
     ebooks = E_Book.objects.filter(course=course)
     return render(request, 'lib/ebook_list.html', {'course': course, 'ebooks': ebooks})
 
-from django.shortcuts import render, get_object_or_404, redirect
-from .models import Faculty, Department, Course, E_Book
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 from .forms import EBookUploadForm
+from .models import Course, E_Book
 
+@login_required
 def ebook_upload(request, course_id=None):
     course = None
     if course_id:
@@ -84,6 +86,7 @@ def ebook_upload(request, course_id=None):
         course_code = request.POST.get('course_code')
         if form.is_valid():
             ebook = form.save(commit=False)
+            ebook.user = request.user  # Assign the current user to the ebook
             if course_code:
                 try:
                     course = Course.objects.get(course_code=course_code)

@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.validators import FileExtensionValidator
 from django.urls import reverse
-
+from user.models import User
 
 def default_cover_image():
     return 'images/pdf.png'
@@ -82,11 +82,17 @@ class Course(models.Model):
     class Meta:
         ordering = ['course_code']  # Order by course code
 
-# Model representing an electronic book (e-book)
+
+# Custom function to define upload paths for user-related files
+def user_directory_path(instance, filename):
+    ext = filename.split('.')[-1]
+    filename = "%s.%s" % (instance.user.id, ext)
+    return 'user_{0}/{1}'.format(instance.user.id, filename)
+
 class E_Book(models.Model):
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=255, unique=True)
     description = models.TextField(blank=True, null=True)
-    course = models.ForeignKey(Course, on_delete=models.CASCADE, blank=True, null=True)
+    course = models.ForeignKey(Course, on_delete=models.DO_NOTHING, blank=True, null=True)
     file = models.FileField(
         upload_to=user_directory_path,
         validators=[FileExtensionValidator(allowed_extensions=['pdf', 'epub', 'mobi', 'txt', 'ppt', 'pptx', 'doc', 'docx'])],
@@ -95,22 +101,41 @@ class E_Book(models.Model):
     updated_at = models.DateTimeField(auto_now=True) 
     uploaded_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default=AWAITING_APPROVAL, blank=True, null=True)
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING, blank=True, null=True, related_name='ebooks')
 
-    def __str__(self):
+    def _str_(self):
         return self.title
 
     def get_absolute_url(self):
         return reverse('library:ebook_list', args=[self.course.id]) 
 
+    def save(self, *args, **kwargs):
+        if not self.title:
+            # Generate title based on course code
+            if self.course:
+                base_title = self.course.course_code
+                existing_ebooks = E_Book.objects.filter(course=self.course).order_by('uploaded_at')
+                next_version = "1.0"
+                if existing_ebooks.exists():
+                    last_title = existing_ebooks.last().title
+                    if '.' in last_title:
+                        main, sub = map(int, last_title.split('.')[-1].split('.'))
+                        if sub < 9:
+                            next_version = f"{main}.{sub + 1}"
+                        else:
+                            next_version = f"{main + 1}.0"
+                self.title = f"{base_title} {next_version}"
+            else:
+                self.title = "Untitled"
+        super().save(*args, **kwargs)
 
-    # Custom search method for e-books
     @classmethod
     def search(cls, query):
         return cls.objects.filter(
             models.Q(title__icontains=query) |
             models.Q(description__icontains=query) |
-            models.Q(course__course_code__icontains=query)
+            models.Q(course_course_code_icontains=query)
         ).distinct()
 
     class Meta:
-        ordering = ['-uploaded_at']  # Order by upload time, newest first
+        ordering = ['-uploaded_at']
