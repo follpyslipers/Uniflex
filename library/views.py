@@ -63,15 +63,29 @@ def course_list(request, department_id):
 
     return render(request, 'lib/course_list.html', {'department': department, 'courses': courses})
 
+
+def create_course(request, department_id):
+    department = get_object_or_404(Department, pk=department_id)
+    if request.method == 'POST':
+        form = CourseForm(request.POST)
+        if form.is_valid():
+            course = form.save(commit=False)
+            course.department = department
+            course.save()
+            return redirect('library:course_list', department_id=department_id)
+    else:
+        form = CourseForm()
+    return render(request, 'lib/create_course.html', {'form': form, 'department': department})
+
 def ebook_list(request, course_id):
     course = get_object_or_404(Course, pk=course_id)
     ebooks = E_Book.objects.filter(course=course)
     return render(request, 'lib/ebook_list.html', {'course': course, 'ebooks': ebooks})
 
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Faculty, Department, Course, E_Book
 from django.contrib.auth.decorators import login_required
 from .forms import EBookUploadForm
-from .models import Course, E_Book
 
 @login_required
 def ebook_upload(request, course_id=None):
