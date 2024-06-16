@@ -28,25 +28,23 @@
 
 <body>
     <div class="preloader"></div>
-    <div class="container">
+    
 
-        {% block container %} 
+    {% block container %} 
 
-
-        {% endblock container %}
-
-        <div class="right-section">
-            <div class="nav">
-                <button id="menu-btn">
-                    <span class="material-icons-sharp">menu</span>
-                </button>
-                <div class="dark-mode">
-                    <span class="material-icons-sharp active">light_mode</span>
-                    <span class="material-icons-sharp">dark_mode</span>
-                </div>
+    {% comment %} <div class="right-section">
+        <div class="nav">
+            <button id="menu-btn">
+                <span class="material-icons-sharp">menu</span>
+            </button>
+            <div class="dark-mode">
+                <span class="material-icons-sharp active">light_mode</span>
+                <span class="material-icons-sharp">dark_mode</span>
             </div>
         </div>
-    </div>
+    </div> {% endcomment %}
+    {% endblock container %}
+
 
     <script src="{% static 'index.js' %}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
