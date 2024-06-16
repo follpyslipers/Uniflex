@@ -13,8 +13,8 @@ class AliyunOSSStorage(Storage):
         self.bucket = oss2.Bucket(oss2.Auth(self.access_key_id, self.access_key_secret), self.endpoint, self.bucket_name)
 
     def _open(self, name, mode='rb'):
-        # Handle opening a file
-        raise NotImplementedError("_open is not implemented")
+        file_obj = self.bucket.get_object(name)
+        return file_obj
 
     def _save(self, name, content):
         self.bucket.put_object(name, content)

@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'location',
     'user',
     'site_analsys',
-    # 'sslserver',
+    'sslserver',
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,30 @@
+<!-- Overlay with transparent background -->
+<div class="overlay" style="background-color: rgba(0, 0, 0, 0.5); position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1000;">
+    <div class="download-container">
+        <h2>Downloading...</h2>
+        <div class="progress-bar">
+            <div class="progress" style="width: 0%;"></div>
+        </div>
+        <p>Downloading {{ ebook.title }} ({{ ebook.file.size|filesizeformat }})</p>
+        <button class="cancel-download" onclick="window.location.href='{% url 'library:ebook_list' course_id=course_id %}'">Cancel</button>
+    </div>
+</div>
+
+<script>
+    var progressBar = document.querySelector('.progress');
+    var downloadSize = {{ ebook.file.size }};
+    var downloaded = 0;
+
+    function updateProgress() {
+        downloaded += 1024; // assume 1KB downloaded per second
+        var progress = (downloaded / downloadSize) * 100;
+        progressBar.style.width = progress + '%';
+        if (progress >= 100) {
+            window.location.href = '{% url 'library:ebook_list' course_id=course_id %}';
+        } else {
+            setTimeout(updateProgress, 1000);
+        }
+    }
+
+    updateProgress();
+</script>

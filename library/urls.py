@@ -11,6 +11,8 @@ urlpatterns = [
     path('department/<int:department_id>/create_course/', views.create_course, name='create_course'),
     path('courses/<int:course_id>/ebooks/', views.ebook_list, name='ebook_list'),
     path('upload/<int:course_id>/', views.ebook_upload, name='upload_ebook'),
+    path('ebook/<int:course_id>/success/', views.upload_successful,  name='upload_successful'), 
+    path('ebook/<int:ebook_id>/download/', views.download_ebook, name='download_ebook'),
 
 ]
 

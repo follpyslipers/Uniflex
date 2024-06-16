@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from .models import Faculty, Department, Course, E_Book
 from .forms import EBookUploadForm ,CourseForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -78,10 +78,15 @@ def create_course(request, department_id):
         form = CourseForm()
     return render(request, 'lib/create_course.html', {'form': form, 'department': department,})
 
+from django.core.paginator import Paginator
+
 def ebook_list(request, course_id):
     course = get_object_or_404(Course, pk=course_id)
     ebooks = E_Book.objects.filter(course=course)
-    return render(request, 'lib/ebook_list.html', {'course': course, 'ebooks': ebooks})
+    paginator = Paginator(ebooks, 8)  # Show 10 ebooks per page
+    page_number = request.GET.get('page')
+    ebooks_page = paginator.get_page(page_number)
+    return render(request, 'lib/ebook_list.html', {'course': course, 'ebooks': ebooks_page})
 
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Faculty, Department, Course, E_Book
@@ -99,6 +104,7 @@ def ebook_upload(request, course_id=None):
     if request.method == 'POST':
         form = EBookUploadForm(request.POST, request.FILES)
         course_code = request.POST.get('course_code')
+        
         if form.is_valid():
             ebook = form.save(commit=False)
             ebook.user = request.user  # Assign the current user to the ebook
@@ -110,7 +116,7 @@ def ebook_upload(request, course_id=None):
             if course:
                 ebook.course = course
                 ebook.save()
-                return redirect('core:feedback_thanks')
+                return redirect('library:upload_successful', course_id=course_id)
             else:
                 return render(request, 'lib/ebook_upload.html', {
                     'form': form,
@@ -128,3 +134,18 @@ def ebook_upload(request, course_id=None):
         'department': department,
         'course': course
     })
+    
+    
+
+def upload_successful(request, course_id):
+    context = {
+        'course_id': course_id,
+    }
+    return render(request, 'lib/upload_successful.html', context)
+
+
+def download_ebook(request, ebook_id):
+    ebook = get_object_or_404(E_Book, pk=ebook_id)
+    response = HttpResponse(ebook.file, content_type='application/octet-stream')
+    response['Content-Disposition'] = f'attachment; filename="{ebook.title}.pdf"'
+    return response

@@ -94,7 +94,7 @@ class E_Book(models.Model):
     description = models.TextField(blank=True, null=True)
     course = models.ForeignKey(Course, on_delete=models.DO_NOTHING, blank=True, null=True)
     file = models.FileField(
-        upload_to=user_directory_path,
+        upload_to='ebook/books/',
         validators=[FileExtensionValidator(allowed_extensions=['pdf', 'epub', 'mobi', 'txt', 'ppt', 'pptx', 'doc', 'docx'])],
     )
     cover_image = models.ImageField(upload_to='ebooks/covers/', default=default_cover_image)
@@ -119,7 +119,9 @@ class E_Book(models.Model):
                 if existing_ebooks.exists():
                     last_title = existing_ebooks.last().title
                     if '.' in last_title:
-                        main, sub = map(int, last_title.split('.')[-1].split('.'))
+                        # Extract the version number part
+                        version_part = last_title.split()[-1]
+                        main, sub = map(int, version_part.split('.'))
                         if sub < 9:
                             next_version = f"{main}.{sub + 1}"
                         else:
@@ -128,6 +130,7 @@ class E_Book(models.Model):
             else:
                 self.title = "Untitled"
         super().save(*args, **kwargs)
+
 
     @classmethod
     def search(cls, query):
