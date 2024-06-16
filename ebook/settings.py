@@ -4,9 +4,7 @@ import environ
 from dotenv import load_dotenv
 
 # Initialize environment variables
-env = environ.Env(
-    DEBUG=(bool, False)
-)
+env = environ.Env()
 
 # Base directory
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -16,7 +14,7 @@ environ.Env.read_env(BASE_DIR / '.env')
 load_dotenv(BASE_DIR / '.env')
 
 # Security settings
-DEBUG = env.bool('DEBUG')
+DEBUG = False
 SECRET_KEY = env('SECRET_KEY')
 
 # Allowed hosts
