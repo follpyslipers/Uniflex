@@ -3,7 +3,7 @@
 {% load static %}
 {% load static %}
 {% block title %}
-UniAbujaFlex | E_book 
+UniAbujaFlex | Create Course Code
 {% endblock title %}
 
 {% block moreheader %}
@@ -30,6 +30,7 @@ UniAbujaFlex | E_book
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 100%;
+    perspective: 1000px;
 
   }
   
@@ -54,6 +55,11 @@ UniAbujaFlex | E_book
     display: flex;
     flex-direction: column;
     align-items: center;
+    transform-style: preserve-3d;
+    transition: transform 0.5s;
+  }
+  .analyse form:hover {
+    transform: rotateY(10deg) translateZ(20px);
   }
   
   /* Form input fields */
@@ -63,11 +69,13 @@ UniAbujaFlex | E_book
     margin-bottom: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    
   }
   
   .analyse input:focus,.analyse textarea:focus,.analyse select:focus {
     border-color: #aaa;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s;
   }
   
   /* Form submit button */

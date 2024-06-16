@@ -18,107 +18,115 @@ UniAbujaFlex | E_book
 <meta name="twitter:image" content="/https://uniabujaflex.oss-us-west-1.aliyuncs.com/home/images/logo.png">
 <link rel="canonical" href="https://www.yourwebsite.com/your-page-url">
 <style>
-    /* Form container */
-    .errorlist{
-      color: red;
-    }
-  .analyse {
-    background-color: transparent;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 100%;
+  /* Form container */
+  .errorlist{
+    color: red;
+  }
+.analyse {
+  background-color: transparent;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  perspective: 1000px;
 
-  }
+}
+
+/* Form title */
+.analyse h1 {
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* Form fields */
+.analyse p {
+  margin-bottom: 20px;
+}
+
+.analyse strong {
+  font-weight: bold;
+  color: #666;
+}
+
+.analyse form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform-style: preserve-3d;
+  transition: transform 0.5s;
+}
+.analyse form:hover {
+  transform: rotateY(10deg) translateZ(20px);
+}
+
+/* Form input fields */
+.analyse input,.analyse textarea,.analyse select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
   
-  /* Form title */
-  .analyse h1 {
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 10px;
+}
+
+.analyse input:focus,.analyse textarea:focus,.analyse select:focus {
+  border-color: #aaa;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s;
+}
+
+/* Form submit button */
+.analyse button[type="submit"] {
+  background-color: #4CAF50;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.analyse button[type="submit"]:hover {
+  background-color: #3e8e41;
+}
+
+/* Form error messages */
+.analyse.error {
+  color: #red;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+/* Animations */
+.analyse {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
   }
-  
-  /* Form fields */
-  .analyse p {
-    margin-bottom: 20px;
+  100% {
+    opacity: 1;
   }
-  
-  .analyse strong {
-    font-weight: bold;
-    color: #666;
+}
+
+.analyse button[type="submit"] {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
   }
-  
-  .analyse form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  50% {
+    transform: scale(1.1);
   }
-  
-  /* Form input fields */
-  .analyse input,.analyse textarea,.analyse select {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+  100% {
+    transform: scale(1);
   }
-  
-  .analyse input:focus,.analyse textarea:focus,.analyse select:focus {
-    border-color: #aaa;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Form submit button */
-  .analyse button[type="submit"] {
-    background-color: #4CAF50;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .analyse button[type="submit"]:hover {
-    background-color: #3e8e41;
-  }
-  
-  /* Form error messages */
-  .analyse.error {
-    color: #red;
-    font-size: 14px;
-    margin-bottom: 10px;
-  }
-  
-  /* Animations */
-  .analyse {
-    animation: fadeIn 0.5s;
-  }
-  
-  @keyframes fadeIn {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
-  
-  .analyse button[type="submit"] {
-    animation: pulse 2s infinite;
-  }
-  
-  @keyframes pulse {
-    0% {
-      transform: scale(1);
-    }
-    50% {
-      transform: scale(1.1);
-    }
-    100% {
-      transform: scale(1);
-    }
-  }
+}
 </style>
 
 {% endblock moreheader %}

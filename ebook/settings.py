@@ -81,6 +81,7 @@ TEMPLATES = [
 ]
 
 # Static and Media URL/Root configurations
+# Static and media files configuration
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
@@ -89,28 +90,21 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 # Aliyun OSS settings
-OSS_ACCESS_KEY_ID = env('OSS_ACCESS_KEY_ID')
-OSS_ACCESS_KEY_SECRET = env('OSS_ACCESS_KEY_SECRET')
-OSS_BUCKET_NAME = env('OSS_BUCKET_NAME')
-OSS_ENDPOINT = env('OSS_ENDPOINT')
+OSS_ACCESS_KEY_ID = os.getenv('OSS_ACCESS_KEY_ID')
+OSS_ACCESS_KEY_SECRET = os.getenv('OSS_ACCESS_KEY_SECRET')
+OSS_BUCKET_NAME = os.getenv('OSS_BUCKET_NAME')
+OSS_ENDPOINT = os.getenv('OSS_ENDPOINT')
 
-# Django storages settings for boto3
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# Django storages settings for Aliyun OSS
+DEFAULT_FILE_STORAGE = 'ebook.storages.AliyunOSSStorage'
+STATICFILES_STORAGE = 'ebook.storages.AliyunOSSStorage'
 
-AWS_S3_REGION_NAME = 'us-west-1'
-AWS_S3_ENDPOINT_URL = f'https://{OSS_ENDPOINT}'
-AWS_ACCESS_KEY_ID = OSS_ACCESS_KEY_ID
-AWS_SECRET_ACCESS_KEY = OSS_ACCESS_KEY_SECRET
-AWS_STORAGE_BUCKET_NAME = OSS_BUCKET_NAME
+# Static and Media URLs using virtual hosted style
+ALIYUN_OSS_CUSTOM_DOMAIN = f'{OSS_BUCKET_NAME}.{OSS_ENDPOINT}'
+STATIC_URL = f'https://{ALIYUN_OSS_CUSTOM_DOMAIN}/static/'
+MEDIA_URL = f'https://{ALIYUN_OSS_CUSTOM_DOMAIN}/media/'
 
-# Corrected Static and Media URLs
-STATIC_URL = f'https://{OSS_BUCKET_NAME}.{OSS_ENDPOINT}/static/'
-MEDIA_URL = f'https://{OSS_BUCKET_NAME}.{OSS_ENDPOINT}/media/'
-AWS_S3_CUSTOM_DOMAIN = f'{OSS_BUCKET_NAME}.{OSS_ENDPOINT}'
-
-# # Security settings
-# Uncomment these if you are using SSL
+# Security settings
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECURE_SSL_REDIRECT = False
 SESSION_COOKIE_SECURE = False

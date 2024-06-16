@@ -66,7 +66,7 @@ class Department(models.Model):
 
 # Model representing an academic course
 class Course(models.Model):
-    course_code = models.CharField(max_length=20)
+    course_code = models.CharField(max_length=20, unique=True)
     title = models.CharField(max_length=70, blank=True, null=True)
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
     updated_at = models.DateTimeField(auto_now=True, blank=True , null=True)
