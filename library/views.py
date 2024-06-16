@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
 from .models import Faculty, Department, Course, E_Book
-from .forms import EBookUploadForm
+from .forms import EBookUploadForm ,CourseForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 def faculty_list(request):
@@ -62,6 +62,7 @@ def course_list(request, department_id):
         courses = paginator.page(paginator.num_pages)
 
     return render(request, 'lib/course_list.html', {'department': department, 'courses': courses})
+
 
 
 def create_course(request, department_id):
