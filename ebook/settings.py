@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 
 # Initialize environment variables
 env = environ.Env(
-    DEBUG=(bool, True)
+    DEBUG=(bool, False)
 )
 
 # Base directory
