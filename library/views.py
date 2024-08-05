@@ -89,9 +89,10 @@ def ebook_list(request, course_id):
     return render(request, 'lib/ebook_list.html', {'course': course, 'ebooks': ebooks_page})
 
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Faculty, Department, Course, E_Book
 from django.contrib.auth.decorators import login_required
+from django.core.validators import FileExtensionValidator
 from .forms import EBookUploadForm
+from .models import E_Book, Course
 
 @login_required
 def ebook_upload(request, course_id=None):
@@ -104,27 +105,35 @@ def ebook_upload(request, course_id=None):
     if request.method == 'POST':
         form = EBookUploadForm(request.POST, request.FILES)
         course_code = request.POST.get('course_code')
-        
+
         if form.is_valid():
-            ebook = form.save(commit=False)
-            ebook.user = request.user  # Assign the current user to the ebook
-            if course_code:
-                try:
-                    course = Course.objects.get(course_code=course_code)
-                except Course.DoesNotExist:
-                    course = None
-            if course:
-                ebook.course = course
-                ebook.save()
-                return redirect('library:upload_successful', course_id=course_id)
-            else:
-                return render(request, 'lib/ebook_upload.html', {
-                    'form': form,
-                    'faculty': faculty,
-                    'department': department,
-                    'course': course,
-                    'error_message': 'No course found with the entered course code.'
-                })
+            files = request.FILES.getlist('files')
+            valid_extensions = ['pdf', 'epub', 'mobi', 'txt', 'ppt', 'pptx', 'doc', 'docx']
+            for file in files:
+                ext = file.name.split('.')[-1].lower()
+                if ext not in valid_extensions:
+                    continue  # Skip file if it has an invalid extension
+
+                ebook = E_Book(file=file, user=request.user)
+                if course_code:
+                    try:
+                        course = Course.objects.get(course_code=course_code)
+                    except Course.DoesNotExist:
+                        course = None
+
+                if course:
+                    ebook.course = course
+                    ebook.save()
+                else:
+                    return render(request, 'lib/ebook_upload.html', {
+                        'form': form,
+                        'faculty': faculty,
+                        'department': department,
+                        'course': course,
+                        'error_message': 'No course found with the entered course code.'
+                    })
+            return redirect('library:upload_successful', course_id=course_id)
+
     else:
         form = EBookUploadForm()
 
@@ -134,8 +143,13 @@ def ebook_upload(request, course_id=None):
         'department': department,
         'course': course
     })
-    
-    
+
+def upload_successful(request, course_id):
+    context = {
+        'course_id': course_id,
+    }
+    return render(request, 'lib/upload_successful.html', context)
+
 
 def upload_successful(request, course_id):
     context = {

@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'location',
     'user',
     'site_analsys',
-    # 'sslserver',
+    'sslserver',
 ]
 
 MIDDLEWARE = [
@@ -121,16 +121,16 @@ CSRF_TRUSTED_ORIGINS = [
     'https://uniflex-production-f9ea.up.railway.app'
 ]
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('DATABASE_NAME'),
-        'USER': env('DATABASE_USER'),
-        'PASSWORD': env('DATABASE_PASSWORD'),
-        'HOST': env('DATABASE_HOST'),
-        'PORT': env('DATABASE_PORT'),
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': env('DATABASE_NAME'),
+#         'USER': env('DATABASE_USER'),
+#         'PASSWORD': env('DATABASE_PASSWORD'),
+#         'HOST': env('DATABASE_HOST'),
+#         'PORT': env('DATABASE_PORT'),
+#     }
+# }
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [

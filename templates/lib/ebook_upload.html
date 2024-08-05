@@ -198,7 +198,7 @@ UniAbujaFlex | E_book
                 
                     <form method="post" enctype="multipart/form-data">
                         {% csrf_token %}
-                        {{ form.as_p }}
+                        {{ form.files }}
                         <button type="submit">Upload</button>
                     </form>
                 </div>

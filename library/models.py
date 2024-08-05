@@ -102,14 +102,12 @@ class E_Book(models.Model):
     uploaded_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default=AWAITING_APPROVAL, blank=True, null=True)
     user = models.ForeignKey(User, on_delete=models.DO_NOTHING, blank=True, null=True, related_name='ebooks')
-
-    def _str_(self):
-        return self.title
-
-    def get_absolute_url(self):
-        return reverse('library:ebook_list', args=[self.course.id]) 
+    
+    
 
     def save(self, *args, **kwargs):
+        if not self.description:
+            self.description = self.file.name
         if not self.title:
             # Generate title based on course code
             if self.course:
@@ -130,8 +128,12 @@ class E_Book(models.Model):
             else:
                 self.title = "Untitled"
         super().save(*args, **kwargs)
+    def _str_(self):
+        return self.title
 
-
+    def get_absolute_url(self):
+        return reverse('library:ebook_list', args=[self.course.id]) 
+  
     @classmethod
     def search(cls, query):
         return cls.objects.filter(
