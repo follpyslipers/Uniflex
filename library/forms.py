@@ -1,16 +1,12 @@
 from django import forms
-from .models import E_Book,Course
-
-from django import forms
 from .models import E_Book, Course
 
 class EBookUploadForm(forms.ModelForm):
-    files = forms.FileField(widget=forms.FileInput(attrs={'multiple': True}), required=True)
+    file = forms.FileField(widget=forms.ClearableFileInput(), required=True)
 
     class Meta:
         model = E_Book
-        fields = ['files']  # Note: We're using 'files' here to handle multiple uploads
-
+        fields = ['file']
 
 class CourseForm(forms.ModelForm):
     class Meta:

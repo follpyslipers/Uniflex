@@ -108,13 +108,10 @@ def ebook_upload(request, course_id=None):
         course_code = request.POST.get('course_code')
 
         if form.is_valid():
-            files = request.FILES.getlist('files')
+            file = request.FILES['file']
             valid_extensions = ['pdf', 'epub', 'mobi', 'txt', 'ppt', 'pptx', 'doc', 'docx']
-            for file in files:
-                ext = file.name.split('.')[-1].lower()
-                if ext not in valid_extensions:
-                    continue  # Skip file if it has an invalid extension
-
+            ext = file.name.split('.')[-1].lower()
+            if ext in valid_extensions:
                 ebook = E_Book(file=file, user=request.user)
                 if course_code:
                     try:
@@ -133,7 +130,7 @@ def ebook_upload(request, course_id=None):
                         'course': course,
                         'error_message': 'No course found with the entered course code.'
                     })
-            return redirect('library:upload_successful', course_id=course_id)
+                return redirect('library:upload_successful', course_id=course_id)
 
     else:
         form = EBookUploadForm()
