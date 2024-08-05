@@ -94,6 +94,7 @@ from django.core.validators import FileExtensionValidator
 from .forms import EBookUploadForm
 from .models import E_Book, Course
 
+
 @login_required
 def ebook_upload(request, course_id=None):
     course = None
@@ -149,14 +150,6 @@ def upload_successful(request, course_id):
         'course_id': course_id,
     }
     return render(request, 'lib/upload_successful.html', context)
-
-
-def upload_successful(request, course_id):
-    context = {
-        'course_id': course_id,
-    }
-    return render(request, 'lib/upload_successful.html', context)
-
 
 def download_ebook(request, ebook_id):
     ebook = get_object_or_404(E_Book, pk=ebook_id)

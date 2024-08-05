@@ -1,8 +1,11 @@
 from django import forms
 from .models import E_Book,Course
 
+from django import forms
+from .models import E_Book, Course
+
 class EBookUploadForm(forms.ModelForm):
-    files = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}), required=True)
+    files = forms.FileField(widget=forms.FileInput(attrs={'multiple': True}), required=True)
 
     class Meta:
         model = E_Book
@@ -14,7 +17,6 @@ class CourseForm(forms.ModelForm):
         model = Course
         fields = ('course_code', 'title')
         
-    
     title = forms.CharField(
         label='Title',
         widget=forms.TextInput(attrs={'placeholder': 'Enter Title Optional'})
