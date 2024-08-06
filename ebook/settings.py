@@ -14,7 +14,7 @@ environ.Env.read_env(BASE_DIR / '.env')
 load_dotenv(BASE_DIR / '.env')
 
 # Security settings
-DEBUG = False
+DEBUG = True
 SECRET_KEY = env('SECRET_KEY')
 
 # Allowed hosts
